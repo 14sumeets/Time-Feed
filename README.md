@@ -20,3 +20,8 @@ component
   # a node.js-generated modules folder. Not to be touched. This is kept in the repo for eventual use with Heroku.
   
 Contact: sumeet.sharma@berkeley.edu
+
+## To run the app:
+1. "git pull" all files to a local folder.
+2. inside the Time-Feed folder, run "node server.js". Open http://localhost:3000 in a browser. (port must be 3000 to be recognized
+by Facebook's API)
