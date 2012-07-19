@@ -13,4 +13,4 @@ app.get('/userhome', function (req, res) {
 app.use(express.static(__dirname));
 
 app.listen(3000);
-console.log("Server running at port 3000. Open http://localhost/3000")
+console.log("Server running on port 3000. Open http://localhost/3000")
