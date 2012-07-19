@@ -1,34 +1,54 @@
 ﻿body
 {
-    background-color:White;
+    background-color:#00CCFF;
     width:100%;
     margin-left: auto;
     margin-right: auto;
-    font-family: Arial;
+    font-family: sans-serif;
+    margin-top: 0px;
 }
-#header
+.header
 {
     background-color:Black;
     font-size:x-large;
     font-weight:bolder;
     font-style:italic;
-    color:White;
+    color:Gray;
     text-align:center;
+    padding: 6px;
+    /*height: 10%;*/
+}
+#loggedinheader
+{
+    font-size:medium;
 }
 #splasharea
 {
-    border-color:Black;
-    border-style:solid;
     height:50%;
 }
 #loginarea
 {
-    border-color:Grey;
-    border-style:dotted;
-    width:20%;
+    border: 1px solid;
+    background-color:#F0F0F0;
+    border-color:#Black;
+    top: 10%;
+    position: relative;
+    height: 30%;
+    text-align: center;
+    width:23%;
+    padding: 6px;
+    margin-left: auto;
+    margin-right: auto;
 }
 #appwindow
 {
-    border-style:solid;
+    position: relative;
+    top: 20px;
     border-color: Black;
+    border: 1px solid;
+    padding: 20px;
+    width: 80%;
+    background-color: #F0F0F0;
+    margin-left: auto;
+    margin-right: auto;
 }
