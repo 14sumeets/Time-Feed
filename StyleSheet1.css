@@ -1,0 +1,34 @@
+﻿body
+{
+    background-color:White;
+    width:100%;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: Arial;
+}
+#header
+{
+    background-color:Black;
+    font-size:x-large;
+    font-weight:bolder;
+    font-style:italic;
+    color:White;
+    text-align:center;
+}
+#splasharea
+{
+    border-color:Black;
+    border-style:solid;
+    height:50%;
+}
+#loginarea
+{
+    border-color:Grey;
+    border-style:dotted;
+    width:20%;
+}
+#appwindow
+{
+    border-style:solid;
+    border-color: Black;
+}
