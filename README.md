@@ -25,3 +25,7 @@ Contact: sumeet.sharma@berkeley.edu
 1. "git pull" all files to a local folder.
 2. Inside the Time-Feed folder, run "node server.js". Open http://localhost:3000 in a browser. (port must be 3000 to be recognized
 by Facebook's API)
+
+## TODO
+-implement facebook posts (pulling facebook news feed)
+-curvy edge
