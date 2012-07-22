@@ -2,12 +2,30 @@
     
     <head> 
         <title>Time Feed -- Home</title>
-         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+             // This is more like it!
+             });
+        </script>
+
         <link href="StyleSheet1.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
     <div id="fb-root"></div>
             <script type="text/javascript">
+/*Set up function to be called when it's time to load the app. (bulk of work) */
+                var loadApp = function () {
+                    //Make nav bar welcome the user (display the name)
+                    FB.api('/me', function (response) {
+                        console.log(response.name); //delete for browser-compatibility
+                        document.getElementById('facebookname').innerHTML = response.name;
+                    });
+                };
+
+
+
+/*Facebook API initialization and setup code */
                 window.fbAsyncInit = function () {
                     FB.init({
                         appId: '111749342300038', // App ID
@@ -15,6 +33,7 @@
                         cookie: true, // enable cookies to allow the server to access the session
                         xfbml: true
                     });
+                    var loadedContent = false;
                     FB.getLoginStatus(function (response) {
                         if (response.status === 'connected') {
                             // the user is logged in and has authenticated your
@@ -24,6 +43,13 @@
                             // and signed request each expire
                             var uid = response.authResponse.userID;
                             var accessToken = response.authResponse.accessToken;
+                            if(!loadedContent) {
+                                loadApp();
+                            }
+
+
+
+                            loadedContent = true;
                             //showLoggedIn();
                         } else {
                             document.getElementById("maincontainer").style.display = "none";
@@ -36,12 +62,20 @@
                             document.getElementById("maincontainer").style.display = "none";
                             window.location = "http://" + window.location.host + "/";
                         } else {
+                            
+                            if(!loadedContent) {
+                                loadApp();
+                            }
+
+
+
+
+                            loadedContent = true;
 
                         }
                     });
 
                 };
-                console.log("initializing");
                 (function () {
                     var e = document.createElement('script');
                     e.type = 'text/javascript';
@@ -49,11 +83,12 @@
                     e.async = true;
                     document.getElementById('fb-root').appendChild(e);
                 } ());
-
-        </script>
+/*Finish setting up app, Facebook API */
+            </script>
 <div id="maincontainer" style="display:inline">
-<div class="header" id="loggedinheader">Welcome,<div id="facebookname"></div>Links | Links | Integrate social media tools <fb:login-button autologoutlink='true'  scope='email,user_birthday,status_update,publish_stream,user_likes'></fb:login-button></div>
-<div id="appwindow">This area will contain the bulk of the interface and appeal. The main scripts will go here. Should have a border and doesn't need to take up the full width.</div>
+<div class="header" id="loggedinheader">Welcome, <span id="facebookname"></span> | Links | Links <div id="fbbutton"> <fb:login-button autologoutlink='true'></fb:login-button></div></div>
+<div id="appwindow"> 
+</div>
 
 
 

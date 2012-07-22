@@ -20,7 +20,14 @@
 }
 #loggedinheader
 {
-    font-size:medium;
+    padding: 6px;
+    font-size:14;
+}
+#fbbutton
+{
+    float: right;
+    position: relative;
+    top: -3px;
 }
 #splasharea
 {
@@ -33,7 +40,6 @@
     border-color:#Black;
     top: 10%;
     position: relative;
-    height: 30%;
     text-align: center;
     width:23%;
     padding: 6px;

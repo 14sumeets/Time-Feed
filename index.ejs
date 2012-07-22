@@ -37,6 +37,9 @@
                     if (response.status==='connected') {
                         document.getElementById("maincontainer").style.display = "none";
                         document.getElementById("loggingintext").style.display = "inline";
+                        FB.api('/me', function(response) {
+                            console.log(response)
+                        });
                         window.location = "http://" + window.location.host + "/userhome";
                     } else {
                         
@@ -44,7 +47,6 @@
                 });
 
             };
-            console.log("initializing fb");
 			(function() {
 				var e = document.createElement('script');
 				e.type = 'text/javascript';
@@ -57,8 +59,8 @@
         <!--End of Javascript SDK loading code -->
 <div id="maincontainer" style="display:inline">
         <div class="header">Welcome to Time Feed!</div>
-        <div id="splasharea"><div id="loginarea">Your time is valuable. We understand. Login below with Facebook.<hr><p>
-         <center><fb:login-button autologoutlink='true'  scope='email,user_birthday,status_update,publish_stream,user_likes'></fb:login-button></center> </div></div>
+        <div id="splasharea"><div id="loginarea">Your time is valuable. We understand.<br /> To get started, login below with Facebook.<hr>
+         <fb:login-button autologoutlink='true'  perms='email,user_birthday,status_update,publish_stream,user_likes'></fb:login-button></div></div>
      
         
 </div>
