@@ -30,4 +30,4 @@ by Facebook's API)
 -implement facebook posts (pulling facebook news feed)
   -start by loading a page from the news feed and displaying it in a format
   -figure out how to retrieve real-time updates to the news feed and "append" them to the top of the news feed (moving the other posts down the page)
--curvy edge
+\n-curvy edge
