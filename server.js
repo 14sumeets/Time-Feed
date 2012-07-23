@@ -10,6 +10,10 @@ app.get('/', function (req, res) {
 app.get('/userhome', function (req, res) {
     res.send(ejs.render(loggedIn, {}));
 });
+
+/*app.get('/fbnewsfeed', function (req, res) {
+    res.send(ejs.render(loggedIn, {}));
+});*/
 app.use(express.static(__dirname));
 
 app.listen(3000);
