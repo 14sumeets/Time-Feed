@@ -12,6 +12,12 @@ app.get('/userhome', function (req, res) {
 });
 
 /*app.get('/fbnewsfeed', function (req, res) {
+    if (req.method === "GET") {
+        // DO STUFF
+    }
+    if (req.method === "POST" ) {
+        // DO STUFF
+    }
     res.send(ejs.render(loggedIn, {}));
 });*/
 app.use(express.static(__dirname));
