@@ -13,7 +13,8 @@ app.get('/userhome', function (req, res) {
 
 /*app.get('/fbnewsfeed', function (req, res) {
     if (req.method === "GET") {
-        // DO STUFF
+        // answer Facebook's verification request
+        var challenge = req.query["hub.challenge"]; //need to return the 'challenge' value back to Facebook
     }
     if (req.method === "POST" ) {
         // DO STUFF
