@@ -15,15 +15,55 @@
     <div id="fb-root"></div>
             <script type="text/javascript">
 /*Set up function to be called when it's time to load the app. (bulk of work) */
-                var loadApp = function () {
+                var loadApp = function (accessToken) {
                     //Make nav bar welcome the user (display the name)
                     FB.api('/me', function (response) {
                         console.log(response.name); //delete for browser-compatibility
                         document.getElementById('facebookname').innerHTML = response.name;
                     });
+                    //Load news feed + Display initial news feed items
+                    FB.api('/me/home', function(response) {
+                        console.log(response);
+                        var dispArea = document.getElementById('appwindow');
+                        var posts = response.data;
+                        var i;
+                        console.log(posts)
+                        for (i = 0;i<posts.length;i++) {
+                            var e = document.createElement("div");
+                            e.innerHTML = "<b>"+posts[i].type +"</b>"+ "<p>"+ posts[i].message +"<hr>";
+                            dispArea.appendChild(e);
+                        }
+                        //https://graph.facebook.com/oauth/access_token?client_id=111749342300038&client_secret=3d2b916403af7b306c267ab650c36eac&grant_type=client_credentials
+                        /*$.ajax({
+                        type: 'POST',
+                        url : "https://graph.facebook.com/111749342300038/subscriptions?"+,
+                        data : {access_token : accessToken,object : "user",fields : "feed",callback_url : window.location.protocol + "//" + window.location.host,verify_token : "oklol"},
+                        dataType : "json",
+                        success : function (data) {
+                            console.log("Server responded "+data.toString())
+                        },
+                        error : function (error) { alert("AJAX FAIL"); console.log(error)}
+                        });*/
+                        setupNewsFeedGetter();
+                    });
+                    //Do post request to subscribe to facebook live update
+
                 };
 
-
+                var setupNewsFeedGetter = function () {
+                    xmlhttp = new XMLHttpRequest();
+                    // *********************
+                    xmlhttp.onreadystatechange=function() {
+                        if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+                            console.log("mkay" + xmlhttp.responseText);
+                        } else{
+                            console.log("fuck");
+                        }
+                    };
+                    //**************************
+                    xmlhttp.open("POST","https://graph.facebook.com/111749342300038/subscriptions",true);
+                    xmlhttp.send("access_token=111749342300038%7C_JUG87C6egRyV6bQWOT5yxdLd9g");
+                };
 
 /*Facebook API initialization and setup code */
                 window.fbAsyncInit = function () {
@@ -44,7 +84,7 @@
                             var uid = response.authResponse.userID;
                             var accessToken = response.authResponse.accessToken;
                             if(!loadedContent) {
-                                loadApp();
+                                loadApp(accessToken);
                             }
 
 
@@ -62,9 +102,9 @@
                             document.getElementById("maincontainer").style.display = "none";
                             window.location = "http://" + window.location.host + "/";
                         } else {
-                            
+                            var accessToken = response.authResponse.accessToken;
                             if(!loadedContent) {
-                                loadApp();
+                                loadApp(accessToken);
                             }
 
 

@@ -11,16 +11,18 @@ app.get('/userhome', function (req, res) {
     res.send(ejs.render(loggedIn, {}));
 });
 
-/*app.get('/fbnewsfeed', function (req, res) {
+app.get('/fbnewsfeed', function (req, res) {
+    console.log("YAY!!!!!!!!!!!")
     if (req.method === "GET") {
         // answer Facebook's verification request
         var challenge = req.query["hub.challenge"]; //need to return the 'challenge' value back to Facebook
+        console.log(req.query)
     }
     if (req.method === "POST" ) {
-        // DO STUFF
+        // YAY. WE'RE BEING AUTO UPDATED
     }
-    res.send(ejs.render(loggedIn, {}));
-});*/
+    res.send("GOODAMN");
+});
 app.use(express.static(__dirname));
 
 app.listen(3000);
