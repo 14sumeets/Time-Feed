@@ -28,6 +28,7 @@
                         var accessToken = response.authResponse.accessToken;
                         document.getElementById("loggingintext").style.display = "inline";
                         document.getElementById("maincontainer").style.display = "none";
+						console.log("http://" + window.location.host + "/userhome")
                         window.location = "http://" + window.location.host + "/userhome";
                         //showLoggedIn();
                     } else {
@@ -41,6 +42,7 @@
                         FB.api('/me', function(response) {
                             console.log(response)
                         });
+						console.log("http://" + window.location.host + "/userhome")
                         window.location = "http://" + window.location.host + "/userhome";
                     } else {
                         
