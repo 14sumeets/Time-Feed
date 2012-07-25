@@ -42,14 +42,14 @@
                         $.ajax({
                         	type: 'POST',
                         	url : "https://graph.facebook.com/111749342300038/subscriptions",
-                        	data :  jQuery.param({access_token : "111749342300038|_JUG87C6egRyV6bQWOT5yxdLd9g",object : "user",fields : "feed",callback_url : "http://localhost:3000/fbnewsfeed",verify_token : "oklol"}),
+                        	data :  jQuery.param({access_token : "111749342300038|_JUG87C6egRyV6bQWOT5yxdLd9g",object : "user",fields : "feed",callback_url : "http://calm-beach-5619.herokuapp.com/fbnewsfeed",verify_token : "oklol"}),
                         	dataType : "json",
                         	success : function (data,t) {
                             	console.log("Server responded "+data.toString())
 								console.log(data)
 								console.log(t)
                         	},
-                        	error : function (error) { alert("AJAX FAIL"); console.log("err:") ;console.log(error)}
+                        	error : function (error) { console.log("err:") ;console.log(error)}
                         	});
                     });
                     //Do post request to subscribe to facebook live update
