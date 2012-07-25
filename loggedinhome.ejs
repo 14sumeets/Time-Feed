@@ -33,42 +33,34 @@
                             e.innerHTML = "<b>"+posts[i].type +"</b>"+ "<p>"+ posts[i].message +"<hr>";
                             dispArea.appendChild(e);
                         }
-                        //https://graph.facebook.com/oauth/access_token?client_id=111749342300038&client_secret=3d2b916403af7b306c267ab650c36eac&grant_type=client_credentials
-                        /*$.ajax({
-                        type: 'POST',
-                        url : "https://graph.facebook.com/111749342300038/subscriptions?"+,
-                        data : {access_token : accessToken,object : "user",fields : "feed",callback_url : window.location.protocol + "//" + window.location.host,verify_token : "oklol"},
-                        dataType : "json",
-                        success : function (data) {
-                            console.log("Server responded "+data.toString())
-                        },
-                        error : function (error) { alert("AJAX FAIL"); console.log(error)}
-                        });*/
-                        setupNewsFeedGetter();
+                        //https://graph.facebook.com/oauth/access_token?client_id=111749342300038&client_secret=3d2b916403af7b306c267ab650c36eac&grant_type=client_credentials				
+						var jcallback = function (returneddata) {
+							console.log("returneddata");
+						};
+						var accessToken = "481488051865882|9ebI4nJU1lzSjV-15rD-oLclk58";
+						console.log( jQuery.param({object : "user",fields : "feed",callback_url : "http://powerful-caverns-1047.herokuapp.com/fbnewsfeed",verify_token : "oklol"}))
+                        $.ajax({
+                        	type: 'POST',
+                        	url : "https://graph.facebook.com/481488051865882/subscriptions",
+                        	data :  jQuery.param({access_token : accessToken,object : "user",fields : "feed",callback_url : "http://powerful-caverns-1047.herokuapp.com/fbnewsfeed",verify_token : "oklol"}),
+                        	dataType : "json",
+                        	success : function (data,t) {
+                            	console.log("Server responded")
+								console.log(data)
+								console.log(t)
+                        	},
+                        	error : function (error) { console.log("err:") ;console.log(error)}
+                        	});
                     });
                     //Do post request to subscribe to facebook live update
 
                 };
 
-                var setupNewsFeedGetter = function () {
-                    xmlhttp = new XMLHttpRequest();
-                    // *********************
-                    xmlhttp.onreadystatechange=function() {
-                        if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-                            console.log("mkay" + xmlhttp.responseText);
-                        } else{
-                            console.log("fuck");
-                        }
-                    };
-                    //**************************
-                    xmlhttp.open("POST","https://graph.facebook.com/111749342300038/subscriptions",true);
-                    xmlhttp.send("access_token=111749342300038%7C_JUG87C6egRyV6bQWOT5yxdLd9g");
-                };
 
 /*Facebook API initialization and setup code */
                 window.fbAsyncInit = function () {
                     FB.init({
-                        appId: '111749342300038', // App ID
+                        appId: '481488051865882', // App ID
                         status: true, // check login status
                         cookie: true, // enable cookies to allow the server to access the session
                         xfbml: true

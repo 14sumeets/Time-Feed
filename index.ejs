@@ -11,12 +11,14 @@
         <script type="text/javascript">
             window.fbAsyncInit = function () {
                 FB.init({
-                    appId: '111749342300038', // App ID
+                    appId: '481488051865882', // App ID
                     status: true, // check login status
                     cookie: true, // enable cookies to allow the server to access the session
                     xfbml: true
                 });
+				console.log("Initializing...")
                 FB.getLoginStatus(function (response) {
+					console.log("Do I even run?")
                     if (response.status === 'connected') {
                         // the user is logged in and has authenticated your
                         // app, and response.authResponse supplies
@@ -30,9 +32,10 @@
                         window.location = "http://" + window.location.host + "/userhome";
                         //showLoggedIn();
                     } else {
-
+						
                     };
                 });
+				console.log("Did i get login status?")
                 FB.Event.subscribe('auth.statusChange', function (response) {
                     if (response.status==='connected') {
                         document.getElementById("maincontainer").style.display = "none";

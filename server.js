@@ -17,13 +17,16 @@ app.get('/fbnewsfeed', function (req, res) {
         // answer Facebook's verification request
         var challenge = req.query["hub.challenge"]; //need to return the 'challenge' value back to Facebook
         console.log(req.query)
+		res.send(challenge)
     }
     if (req.method === "POST" ) {
         // YAY. WE'RE BEING AUTO UPDATED
+		console.log("got a POST!")
+		console.log(req)
     }
-    res.send("GOODAMN");
 });
 app.use(express.static(__dirname));
 
-app.listen(3000);
-console.log("Server running on port 3000. Open http://localhost:3000")
+app.listen(process.env.PORT || 3000);
+console.log("Server running on port:")
+console.log(process.env.PORT || 3000)
