@@ -18,6 +18,7 @@
                 });
 				console.log("Initializing...")
                 FB.getLoginStatus(function (response) {
+					console.log("Do I even run?")
                     if (response.status === 'connected') {
                         // the user is logged in and has authenticated your
                         // app, and response.authResponse supplies
@@ -32,7 +33,7 @@
                         window.location = "http://" + window.location.host + "/userhome";
                         //showLoggedIn();
                     } else {
-
+						
                     };
                 });
                 FB.Event.subscribe('auth.statusChange', function (response) {
