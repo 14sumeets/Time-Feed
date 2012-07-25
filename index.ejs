@@ -1,0 +1,73 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml"> 
+    
+    <head>
+        <title>Time Feed -- Home</title>
+        <link href="StyleSheet1.css" rel="stylesheet" type="text/css"/>
+    </head>
+    
+    <body>
+        <!--This code is given by Facebook. Used to load the Javascript SDK-->
+        <div id="fb-root"></div>
+        <script type="text/javascript">
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId: '111749342300038', // App ID
+                    status: true, // check login status
+                    cookie: true, // enable cookies to allow the server to access the session
+                    xfbml: true
+                });
+                FB.getLoginStatus(function (response) {
+                    if (response.status === 'connected') {
+                        // the user is logged in and has authenticated your
+                        // app, and response.authResponse supplies
+                        // the user's ID, a valid access token, a signed
+                        // request, and the time the access token 
+                        // and signed request each expire
+                        var uid = response.authResponse.userID;
+                        var accessToken = response.authResponse.accessToken;
+                        document.getElementById("loggingintext").style.display = "inline";
+                        document.getElementById("maincontainer").style.display = "none";
+                        window.location = "http://" + window.location.host + "/userhome";
+                        //showLoggedIn();
+                    } else {
+
+                    };
+                });
+                FB.Event.subscribe('auth.statusChange', function (response) {
+                    if (response.status==='connected') {
+                        document.getElementById("maincontainer").style.display = "none";
+                        document.getElementById("loggingintext").style.display = "inline";
+                        FB.api('/me', function(response) {
+                            console.log(response)
+                        });
+                        window.location = "http://" + window.location.host + "/userhome";
+                    } else {
+                        
+                    }
+                });
+
+            };
+			(function() {
+				var e = document.createElement('script');
+				e.type = 'text/javascript';
+				e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+				e.async = true;
+				document.getElementById('fb-root').appendChild(e);
+			}());
+
+        </script>
+        <!--End of Javascript SDK loading code -->
+<div id="maincontainer" style="display:inline">
+        <div class="header">Welcome to Time Feed!</div>
+        <div id="splasharea"><div id="loginarea">Your time is valuable. We understand.<br /> To get started, login below with Facebook.<hr>
+         <fb:login-button autologoutlink='true'  perms='email,user_birthday,status_update,publish_stream,user_likes,read_stream'></fb:login-button></div></div>
+     
+        
+</div>
+
+
+
+<div id="loggingintext" style="display:none">Logging in...</div>
+</body>
+
+</html>
