@@ -16,6 +16,7 @@
                     cookie: true, // enable cookies to allow the server to access the session
                     xfbml: true
                 });
+				console.log("Initializing...")
                 FB.getLoginStatus(function (response) {
                     if (response.status === 'connected') {
                         // the user is logged in and has authenticated your
