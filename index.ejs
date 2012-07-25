@@ -36,6 +36,7 @@
 						
                     };
                 });
+				console.log("Did i get login status?")
                 FB.Event.subscribe('auth.statusChange', function (response) {
                     if (response.status==='connected') {
                         document.getElementById("maincontainer").style.display = "none";
