@@ -33,36 +33,7 @@
                             e.innerHTML = "<b>"+posts[i].type +"</b>"+ "<p>"+ posts[i].message +"<hr>";
                             dispArea.appendChild(e);
                         }
-                        //https://graph.facebook.com/oauth/access_token?client_id=111749342300038&client_secret=3d2b916403af7b306c267ab650c36eac&grant_type=client_credentials				
-						var jcallback = function (returneddata) {
-							console.log("returneddata");
-						};
-<<<<<<< HEAD
-						var accessToken = "481488051865882|9ebI4nJU1lzSjV-15rD-oLclk58";
-						console.log( jQuery.param({object : "user",fields : "feed",callback_url : "http://powerful-caverns-1047.herokuapp.com/fbnewsfeed",verify_token : "oklol"}))
-                        $.ajax({
-                        	type: 'POST',
-                        	url : "https://graph.facebook.com/481488051865882/subscriptions",
-                        	data :  jQuery.param({access_token : accessToken,object : "user",fields : "feed",callback_url : "http://powerful-caverns-1047.herokuapp.com/fbnewsfeed",verify_token : "oklol"}),
-                        	dataType : "json",
-                        	success : function (data,t) {
-                            	console.log("Server responded")
-=======
-						var accessToken = "111749342300038|_JUG87C6egRyV6bQWOT5yxdLd9g";
-						console.log( jQuery.param({object : "user",fields : "feed",callback_url : "http://localhost:3000/fbnewsfeed",verify_token : "oklol"}))
-                        $.ajax({
-                        	type: 'POST',
-                        	url : "https://graph.facebook.com/111749342300038/subscriptions",
-                        	data :  jQuery.param({access_token : "111749342300038|_JUG87C6egRyV6bQWOT5yxdLd9g",object : "user",fields : "feed",callback_url : "http://calm-beach-5619.herokuapp.com/fbnewsfeed",verify_token : "oklol"}),
-                        	dataType : "json",
-                        	success : function (data,t) {
-                            	console.log("Server responded "+data.toString())
->>>>>>> 7e06f3a61de0020410caa21f16871281896678ad
-								console.log(data)
-								console.log(t)
-                        	},
-                        	error : function (error) { console.log("err:") ;console.log(error)}
-                        	});
+                        //https://graph.facebook.com/oauth/access_token?client_id=111749342300038&client_secret=3d2b916403af7b306c267ab650c36eac&grant_type=client_credentials
                     });
                     //Do post request to subscribe to facebook live update
 
