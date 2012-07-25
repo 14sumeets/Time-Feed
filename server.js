@@ -32,7 +32,7 @@ app.post('/fbnewsfeed', function (req, res) {
     if (req.method === "POST" ) {
         // YAY. WE'RE BEING AUTO UPDATED
 		console.log("got a POST!")
-        console.log(req.body)
+        console.log(req.body);
     }
     res.send(req.body)
 });
