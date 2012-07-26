@@ -44,15 +44,15 @@
                             var i = 0;
                             console.log("most recent: "+mostRecentTime)
                             console.log(posts)
-                            while (mostRecentTime != posts[i].updated_time) {
+                            while (mostRecentTime != posts[i].updated_time && i<posts.length) {
                                 var e = document.createElement("div");
                                 e.innerHTML = "<b>"+posts[i].type +"</b>"+ "<p>"+ posts[i].message +"<hr>";
-                                dispArea.insertBefore(e,posts[0]);
+                                dispArea.insertBefore(e,posts[i]);
                                 i++;
                             }
                         });
 
-                    },60000)
+                    },5000)
 
                 };
 
