@@ -3,11 +3,7 @@
     <head> 
         <title>Time Feed -- Home</title>
          <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-        <script type="text/javascript">
-            $(document).ready(function() {
-             // This is more like it!
-             });
-        </script>
+        <script type="text/javascript" src="date.js"></script>
 
         <link href="StyleSheet1.css" rel="stylesheet" type="text/css"/>
     </head>
@@ -22,6 +18,7 @@
                         document.getElementById('facebookname').innerHTML = response.name;
                     });
                     //Load news feed + Display initial news feed items
+                    var mostRecentTime = null;
                     FB.api('/me/home', function(response) {
                         console.log(response);
                         var dispArea = document.getElementById('appwindow');
@@ -33,9 +30,29 @@
                             e.innerHTML = "<b>"+posts[i].type +"</b>"+ "<p>"+ posts[i].message +"<hr>";
                             dispArea.appendChild(e);
                         }
+                        if (posts.length > 0) {
+                            mostRecentTime = posts[0].updated_time;
+                        }
                         //https://graph.facebook.com/oauth/access_token?client_id=111749342300038&client_secret=3d2b916403af7b306c267ab650c36eac&grant_type=client_credentials
                     });
-                    //Do post request to subscribe to facebook live update
+                    //Have a timer and periodically check for newer news feed items
+                    setInterval(function() { 
+                        console.log("hello again")
+                        FB.api('/me/home',function(response) {
+                            var posts = response.data;
+                            var dispArea = document.getElementById('appwindow');
+                            var i = 0;
+                            console.log("most recent: "+mostRecentTime)
+                            console.log(posts)
+                            while (mostRecentTime != posts[i].updated_time) {
+                                var e = document.createElement("div");
+                                e.innerHTML = "<b>"+posts[i].type +"</b>"+ "<p>"+ posts[i].message +"<hr>";
+                                dispArea.insertBefore(e,posts[0]);
+                                i++;
+                            }
+                        });
+
+                    },60000)
 
                 };
 
