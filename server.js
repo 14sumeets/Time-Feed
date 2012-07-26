@@ -41,7 +41,7 @@ app.get('/fbnewsfeed', function (req, res) {
     if (req.method === "GET") {
         // answer Facebook's verification request
         var challenge = req.query["hub.challenge"]; //need to return the 'challenge' value back to Facebook
-        console.log(req.query)
+        console.log(req.query["hub.challenge"])
         res.send(challenge)
     }
 });
