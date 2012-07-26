@@ -38,7 +38,8 @@ app.get('/subscribefb', function (req, res) {
         body : querystring.stringify({access_token : "391087367620804|cHnrQ3TeHYNGM1OhK1qD1CrtxIY",object : "user",fields : "feed,friends,home",
             callback_url : "http://morning-dusk-7788.herokuapp.com/fbnewsfeed",verify_token : "oklol"}),
     },function (error,response,body) {
-        console.log("status "+response.statusCode)
+        console.log("status "+response.statusCode + "error:")
+        console.log(error)
     });
 });
 
