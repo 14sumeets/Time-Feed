@@ -40,8 +40,9 @@ app.get('/subscribefb', function (req, res) {
     },function (error,response,body) {
         console.log("status "+response.statusCode + "error:")
         console.log(response) 
+        res.send(response);
     });
-    res.send("subscribed(?)");
+    res.send("subscribed - ");
 });
 
 
