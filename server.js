@@ -39,9 +39,9 @@ app.get('/subscribefb', function (req, res) {
             callback_url : "http://morning-dusk-7788.herokuapp.com/fbnewsfeed",verify_token : "oklol"}),
     },function (error,response,body) {
         console.log("status "+response.statusCode + "error:")
-        console.log(response) 
-        res.send(response);
+        console.log(body) 
     });
+    res.send("subscribed");
 });
 
 
