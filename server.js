@@ -17,6 +17,7 @@ app.get('/unsubscribefb', function (req, res) {
         console.log("I am del")
         console.log(">>>>"+response.statusCode)
     });
+	res.send("unsubscribed");
 });
 
 
