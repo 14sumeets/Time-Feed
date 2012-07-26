@@ -11,13 +11,35 @@ var loggedIn = fs.readFileSync(__dirname + '/loggedinhome.ejs', 'utf8');
 app.get('/unsubscribefb', function (req, res) {
     console.log("DELETING SUBSCRIPTIONS")
     httpreq.del({
-        url : "https://graph.facebook.com/481488051865882/subscriptions",
-        body : querystring.stringify({access_token : "481488051865882|9ebI4nJU1lzSjV-15rD-oLclk58",object : "user"}),
+        url : "https://graph.facebook.com/391087367620804/subscriptions",
+        body : querystring.stringify({access_token : "391087367620804|cHnrQ3TeHYNGM1OhK1qD1CrtxIY",object : "user"}),
     },function (error,response,body) {
         console.log("I am del")
         console.log(">>>>"+response.statusCode)
     });
 	res.send("unsubscribed");
+});
+
+app.get('/postToCallback', function (req, res) {
+    httpreq.post({
+        url : "http://morning-dusk-7788.herokuapp.com/fbnewsfeed",
+        headers: {'content-type' : 'application/x-www-form-urlencoded'},
+        body : "sup",
+    },function (error,response,body) {
+        console.log("POSTED status "+response.statusCode)
+    });
+    res.send("yes");
+});
+
+app.get('/subscribefb', function (req, res) {
+    console.log("subscribing to facebook")
+    httpreq.post({
+        url : "https://graph.facebook.com/391087367620804/subscriptions",
+        body : querystring.stringify({access_token : "391087367620804|cHnrQ3TeHYNGM1OhK1qD1CrtxIY",object : "user",fields : "feed,friends",
+            callback_url : "http://morning-dusk-7788.herokuapp.com/fbnewsfeed",verify_token : "oklol"}),
+    },function (error,response,body) {
+        console.log("status "+response.statusCode)
+    });
 });
 
 
@@ -53,9 +75,4 @@ console.log("Server running on port:")
 console.log(process.env.PORT || 3000)
 
 //Initialize Facebook Subscription updates for all authenticated users
-httpreq.post({
-    url : "https://graph.facebook.com/481488051865882/subscriptions",
-    body : querystring.stringify({access_token : "481488051865882|9ebI4nJU1lzSjV-15rD-oLclk58",object : "user",fields : "feed",callback_url : "http://morning-dusk-7788.herokuapp.com/fbnewsfeed",verify_token : "oklol"}),
-},function (error,response,body) {
-    console.log("status "+response.statusCode)
-});
+
