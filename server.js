@@ -42,7 +42,6 @@ app.get('/subscribefb', function (req, res) {
         console.log(response) 
         res.send(response);
     });
-    res.send("subscribed - ");
 });
 
 
