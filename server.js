@@ -12,7 +12,7 @@ app.get('/unsubscribefb', function (req, res) {
     console.log("DELETING SUBSCRIPTIONS")
     httpreq.del({
         url : "https://graph.facebook.com/111749342300038/subscriptions",
-        body : querystring.stringify({access_token : "111749342300038|_JUG87C6egRyV6bQWOT5yxdLd9g",object : "user"}),
+        body : querystring.stringify({access_token : "481488051865882|9ebI4nJU1lzSjV-15rD-oLclk58",object : "user"}),
     },function (error,response,body) {
         console.log("I am del")
         console.log(">>>>"+response.statusCode)
@@ -54,7 +54,7 @@ console.log(process.env.PORT || 3000)
 //Initialize Facebook Subscription updates for all authenticated users
 httpreq.post({
     url : "https://graph.facebook.com/111749342300038/subscriptions",
-    body : querystring.stringify({access_token : "111749342300038|_JUG87C6egRyV6bQWOT5yxdLd9g",object : "user",fields : "feed",callback_url : "http://morning-dusk-7788.herokuapp.com/fbnewsfeed",verify_token : "oklol"}),
+    body : querystring.stringify({access_token : "481488051865882|9ebI4nJU1lzSjV-15rD-oLclk58",object : "user",fields : "feed",callback_url : "http://morning-dusk-7788.herokuapp.com/fbnewsfeed",verify_token : "oklol"}),
 },function (error,response,body) {
     console.log("status "+response.statusCode)
 });
