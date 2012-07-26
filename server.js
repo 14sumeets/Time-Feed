@@ -11,7 +11,7 @@ var loggedIn = fs.readFileSync(__dirname + '/loggedinhome.ejs', 'utf8');
 app.get('/unsubscribefb', function (req, res) {
     console.log("DELETING SUBSCRIPTIONS")
     httpreq.del({
-        url : "https://graph.facebook.com/111749342300038/subscriptions",
+        url : "https://graph.facebook.com/481488051865882/subscriptions",
         body : querystring.stringify({access_token : "481488051865882|9ebI4nJU1lzSjV-15rD-oLclk58",object : "user"}),
     },function (error,response,body) {
         console.log("I am del")
