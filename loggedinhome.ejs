@@ -10,6 +10,10 @@
     <body>
     <div id="fb-root"></div>
             <script type="text/javascript">
+                //in the DIV of region, if given a nodeSpot, insert new node before it otherwise if null just append it to region's childlist
+                var displayFBpost = function(region,post,nodeSpot) {
+
+                };
 /*Set up function to be called when it's time to load the app. (bulk of work) */
                 var loadApp = function (accessToken) {
                     //Make nav bar welcome the user (display the name)
@@ -18,6 +22,7 @@
                         document.getElementById('facebookname').innerHTML = response.name;
                     });
                     //Load news feed + Display initial news feed items
+                    //*************************************************
                     var mostRecentTime = null;
 					var displayedPostTimes = {};
                     FB.api('/me/home', function(response) {
@@ -27,18 +32,20 @@
                         var i;
                         console.log(posts)
                         for (i = 0;i<posts.length;i++) {
-                            var e = document.createElement("div");
-							var msg = posts[i].message;
-							if (msg == undefined) {
-								msg = posts[i].story;
-							}
-                            e.innerHTML = "<b>"+posts[i].from.name +"</b>"+"<p>" + "<img src=\"" + posts[i].picture  + "\"/>" + "<p>"+ msg +"<hr>";
-                            dispArea.appendChild(e);
+                            displayFBpost(dispArea,post[i]);
+                            //var e = document.createElement("div");
+							//var msg = posts[i].message;
+							//if (msg == undefined) {
+							//	msg = posts[i].story;
+							//}
+                            //e.innerHTML = "<b>"+posts[i].from.name +"</b>"+"<p>" + "<img src=\"" + posts[i].picture  + "\"/>" + "<p>"+ msg +"<hr>";
+                            //dispArea.appendChild(e);
 							displayedPostTimes[posts[i].created_time] = 1;
                         }
                         //https://graph.facebook.com/oauth/access_token?client_id=111749342300038&client_secret=3d2b916403af7b306c267ab650c36eac&grant_type=client_credentials
                     });
                     //Have a timer and periodically check for newer news feed items
+                    //************************************************************8
                     setInterval(function() { 
                         console.log("hello again")
                         FB.api('/me/home',function(response) {
@@ -52,20 +59,20 @@
 							for (i=0;i<posts.length;i++) {
 								if (displayedPostTimes[posts[i].created_time] == undefined) {
 									displayedPostTimes[posts[i].created_time] = 1;
-									var e = document.createElement("div");
-									e.className = "addedPost";
-									dispArea.insertBefore(e,insertionSpot);
-									$(".addedPost:first").hide();
-	                                var msg = posts[i].message;
-									if (msg == undefined) {
-										msg = posts[i].story;
-									}
-		                            e.innerHTML = "<b>"+posts[i].from.name +"</b>"+"<p>" + "<img src=\"" + posts[i].picture  + "\"/>" + "<p>"+ msg +"<hr>";
+									//var e = document.createElement("div");
+									//e.className = "addedPost";
+									//dispArea.insertBefore(e,insertionSpot);
+									//$(".addedPost:first").hide();
+	                                //var msg = posts[i].message;
+									//if (msg == undefined) {
+									//	msg = posts[i].story;
+									//}
+                                    displayFBpost(post[i]);
+		                            //e.innerHTML = "<b>"+posts[i].from.name +"</b>"+"<p>" + "<img src=\"" + posts[i].picture  + "\"/>" + "<p>"+ msg +"<hr>";
 									$(".addedPost:first").slideDown(1000);
 								}
 							}
                         });
-
                     },10000)
 
                 };
