@@ -19,6 +19,7 @@
                     });
                     //Load news feed + Display initial news feed items
                     var mostRecentTime = null;
+					var displayedPostTimes = {};
                     FB.api('/me/home', function(response) {
                         console.log(response);
                         var dispArea = document.getElementById('appwindow');
@@ -27,11 +28,13 @@
                         console.log(posts)
                         for (i = 0;i<posts.length;i++) {
                             var e = document.createElement("div");
-                            e.innerHTML = "<b>"+posts[i].type +"</b>"+ "<p>"+ posts[i].message +"<hr>";
+							var msg = posts[i].message;
+							if (msg == undefined) {
+								msg = posts[i].story;
+							}
+                            e.innerHTML = "<b>"+posts[i].from.name +"</b>"+"<p>" + "<img src=\"" + posts[i].picture  + "\"/>" + "<p>"+ msg +"<hr>";
                             dispArea.appendChild(e);
-                        }
-                        if (posts.length > 0) {
-                            mostRecentTime = posts[0].updated_time;
+							displayedPostTimes[posts[i].created_time] = 1;
                         }
                         //https://graph.facebook.com/oauth/access_token?client_id=111749342300038&client_secret=3d2b916403af7b306c267ab650c36eac&grant_type=client_credentials
                     });
@@ -41,18 +44,29 @@
                         FB.api('/me/home',function(response) {
                             var posts = response.data;
                             var dispArea = document.getElementById('appwindow');
-                            var i = 0;
+                            var i;
+							var insertionSpot = dispArea.firstChild;
                             console.log("most recent: "+mostRecentTime)
                             console.log(posts)
-                            while (mostRecentTime != posts[i].updated_time && i<posts.length) {
-                                var e = document.createElement("div");
-                                e.innerHTML = "<b>"+posts[i].type +"</b>"+ "<p>"+ posts[i].message +"<hr>";
-                                dispArea.insertBefore(e,posts[i]);
-                                i++;
-                            }
+
+							for (i=0;i<posts.length;i++) {
+								if (displayedPostTimes[posts[i].created_time] == undefined) {
+									displayedPostTimes[posts[i].created_time] = 1;
+									var e = document.createElement("div");
+									e.className = "addedPost";
+									dispArea.insertBefore(e,insertionSpot);
+									$(".addedPost:first").hide();
+	                                var msg = posts[i].message;
+									if (msg == undefined) {
+										msg = posts[i].story;
+									}
+		                            e.innerHTML = "<b>"+posts[i].from.name +"</b>"+"<p>" + "<img src=\"" + posts[i].picture  + "\"/>" + "<p>"+ msg +"<hr>";
+									$(".addedPost:first").slideDown(1000);
+								}
+							}
                         });
 
-                    },5000)
+                    },10000)
 
                 };
 
