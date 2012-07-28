@@ -43,13 +43,18 @@ app.get('/unsubscribefb', function (req, res) {
     });
     res.send("subscribed");
 });*/
-
+var id = null;
+if (process.env.PORT) {
+	id = '391087367620804';
+} else {
+	id = '112186178926689';
+}
 
 app.get('/', function (req, res) {
-    res.send(ejs.render(index,{}));
+    res.send(ejs.render(index,{appId : id}));
 });
 app.get('/userhome', function (req, res) {
-    res.send(ejs.render(loggedIn, {}));
+    res.send(ejs.render(loggedIn, {appId : id}));
 });
 /*
 app.post('/fbnewsfeed', function (req, res) {

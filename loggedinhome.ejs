@@ -11,8 +11,36 @@
     <div id="fb-root"></div>
             <script type="text/javascript">
                 //in the DIV of region, if given a nodeSpot, insert new node before it otherwise if null just append it to region's childlist
-                var displayFBpost = function(region,post,nodeSpot) {
-
+                var displayFBpost = function(region,post,insertionSpot) {
+					var e = document.createElement("div");
+					e.className = "FacebookPost";
+					e.style.display = 'none';
+					region.insertBefore(e,insertionSpot);
+					var from = post.from.name;
+					var html = "<div class=\"fbpostauthor\">"+"<span class=\"fbpostauthorpic\"></span>"+post.from.name+"</div>";
+                    var msg = post.message;
+					if (msg == undefined) {
+						msg = post.story;
+					}
+					switch (post.type) 
+					{
+					case "question":
+						html = html+  "<p>" + "<img src=\"" + post.picture  + "\"/>" + "<p>"+ msg;
+						break;
+					case "link":
+						html = html+  "<p>" + "<img src=\"" + post.picture  + "\"/>" + "<p>"+ msg;
+						break;
+					case "video":
+						html = html + "<p>" + "<img src=\"" + post.picture  + "\"/>" + "<p>"+ msg;
+						break;
+					case "photo":
+						html = html +"<p>" + "<img src=\"" + post.picture  + "\"/>" + "<p>"+ msg;
+						break;
+					case "status":
+						html = html +"<p>" + "<img src=\"" + post.picture  + "\"/>" + "<p>"+ msg;
+					}
+					e.innerHTML = html +"<hr>";
+					return {authorid : post.from.id};
                 };
 /*Set up function to be called when it's time to load the app. (bulk of work) */
                 var loadApp = function (accessToken) {
@@ -21,7 +49,7 @@
                         console.log(response.name); //delete for browser-compatibility
                         document.getElementById('facebookname').innerHTML = response.name;
                     });
-                    //Load news feed + Display initial news feed items
+                    //Load news feed + Display initial news feed items + Retrieve authorIds to query their profile pics and show them in their posts (use a hash for optimization?)
                     //*************************************************
                     var mostRecentTime = null;
 					var displayedPostTimes = {};
@@ -29,23 +57,20 @@
                         console.log(response);
                         var dispArea = document.getElementById('appwindow');
                         var posts = response.data;
+						var authorids = [];
                         var i;
                         console.log(posts)
                         for (i = 0;i<posts.length;i++) {
-                            displayFBpost(dispArea,post[i]);
-                            //var e = document.createElement("div");
-							//var msg = posts[i].message;
-							//if (msg == undefined) {
-							//	msg = posts[i].story;
-							//}
-                            //e.innerHTML = "<b>"+posts[i].from.name +"</b>"+"<p>" + "<img src=\"" + posts[i].picture  + "\"/>" + "<p>"+ msg +"<hr>";
-                            //dispArea.appendChild(e);
+                            authorids.push(displayFBpost(dispArea,posts[i],null).authorid);
 							displayedPostTimes[posts[i].created_time] = 1;
                         }
-                        //https://graph.facebook.com/oauth/access_token?client_id=111749342300038&client_secret=3d2b916403af7b306c267ab650c36eac&grant_type=client_credentials
+						$(".FacebookPost").slideDown(2000);
+						console.log(authorids);
+                        //create and send off a Facebook batch of requests for FB post user pictures
+						
                     });
                     //Have a timer and periodically check for newer news feed items
-                    //************************************************************8
+                    //************************************************************
                     setInterval(function() { 
                         console.log("hello again")
                         FB.api('/me/home',function(response) {
@@ -67,9 +92,9 @@
 									//if (msg == undefined) {
 									//	msg = posts[i].story;
 									//}
-                                    displayFBpost(post[i]);
+                                    //displayFBpost(dispArea,post[i],insertionSpot);
 		                            //e.innerHTML = "<b>"+posts[i].from.name +"</b>"+"<p>" + "<img src=\"" + posts[i].picture  + "\"/>" + "<p>"+ msg +"<hr>";
-									$(".addedPost:first").slideDown(1000);
+									//$(".addedPost:first").slideDown(1000);
 								}
 							}
                         });
@@ -81,7 +106,7 @@
 /*Facebook API initialization and setup code */
                 window.fbAsyncInit = function () {
                     FB.init({
-                        appId: '391087367620804', // App ID
+                        appId: '<%= appId %>', // App ID
                         status: true, // check login status
                         cookie: true, // enable cookies to allow the server to access the session
                         xfbml: true

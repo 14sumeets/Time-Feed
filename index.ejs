@@ -10,8 +10,9 @@
         <div id="fb-root"></div>
         <script type="text/javascript">
             window.fbAsyncInit = function () {
+				console.log("getting "+ '<%= appId %>')
                 FB.init({
-                    appId: '391087367620804', // App ID
+                    appId: '<%= appId %>', // App ID
                     status: true, // check login status
                     cookie: true, // enable cookies to allow the server to access the session
                     xfbml: true

@@ -18,6 +18,11 @@
     padding: 6px;
     /*height: 10%;*/
 }
+.fbpostauthor
+{
+	font-weight:bolder;
+	
+}
 #loggedinheader
 {
     padding: 6px;
