@@ -17,7 +17,7 @@
 					e.style.display = 'none';
 					region.insertBefore(e,insertionSpot);
 					var from = post.from.name;
-					var html = "<div class=\"fbpostauthor\">"+"<span class=\"fbpostauthorpic\"></span>"+post.from.name+"</div>";
+					var html = "<div class=\"fbpostauthor\">"+"<img src=\"https://graph.facebook.com/" + post.from.id  + "/picture\"/>"+post.from.name+"</div>";
                     var msg = post.message;
 					if (msg == undefined) {
 						msg = post.story;
