@@ -85,7 +85,7 @@
 									displayedPostTimes[posts[i].created_time] = 1;
 									displayFBpost(dispArea,posts[i],insertionSpot);
 									insertionSpot = posts[i];
-									$(".FacebookPost:first").slideDown(2000);
+									$(".FacebookPost:first").slideDown(2000,function() {$(".fbpostimage").slideDown(2000);});
 									//var e = document.createElement("div");
 									//e.className = "addedPost";
 									//dispArea.insertBefore(e,insertionSpot);
