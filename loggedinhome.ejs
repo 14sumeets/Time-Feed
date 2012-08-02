@@ -25,19 +25,19 @@
 					switch (post.type) 
 					{
 					case "question":
-						html = html+  "<p>" + "<img src=\"" + post.picture  + "\"/>" + "<p>"+ msg;
+						html = html+  "<p>" + "<img style=\"display:none\" class=\"fbpostimage\" src=\"" + post.picture  + "\"/>" + "<p>"+ msg;
 						break;
 					case "link":
-						html = html+  "<p>" + "<img src=\"" + post.picture  + "\"/>" + "<p>"+ msg;
+						html = html+  "<p>" + "<img style=\"display:none\" class=\"fbpostimage\" src=\"" + post.picture  + "\"/>" + "<p>"+ msg;
 						break;
 					case "video":
-						html = html + "<p>" + "<img src=\"" + post.picture  + "\"/>" + "<p>"+ msg;
+						html = html + "<p>" + "<img style=\"display:none\" class=\"fbpostimage\" src=\"" + post.picture  + "\"/>" + "<p>"+ msg;
 						break;
 					case "photo":
-						html = html +"<p>" + "<img src=\"" + post.picture  + "\"/>" + "<p>"+ msg;
+						html = html +"<p>" + "<img style=\"display:none\"  class=\"fbpostimage\"src=\"" + post.picture  + "\"/>" + "<p>"+ msg;
 						break;
 					case "status":
-						html = html +"<p>" + "<img src=\"" + post.picture  + "\"/>" + "<p>"+ msg;
+						html = html +"<p>" + "<img style=\"display:none\" class=\"fbpostimage\" src=\"" + post.picture  + "\"/>" + "<p>"+ msg;
 					}
 					e.innerHTML = html +"</div><hr>";
 					return;
@@ -64,7 +64,7 @@
                             displayFBpost(dispArea,posts[i],null);
 							displayedPostTimes[posts[i].created_time] = 1;
                         }
-						$(".FacebookPost").slideDown(2000);
+						$(".FacebookPost").slideDown(1000,function() {$(".fbpostimage").slideDown(2000);});
                         //create and send off a Facebook batch of requests for FB post user pictures
 						
                     });
