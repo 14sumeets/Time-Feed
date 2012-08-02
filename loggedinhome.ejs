@@ -17,7 +17,7 @@
 					e.style.display = 'none';
 					region.insertBefore(e,insertionSpot);
 					var from = post.from.name;
-					var html = "<div class=\"fbpostauthor\">"+"<img src=\"https://graph.facebook.com/" + post.from.id  + "/picture\"/>"+post.from.name+"</div>";
+					var html = "<div class=\"fbpostauthorpic\">"+"<img src=\"https://graph.facebook.com/" + post.from.id  + "/picture\"/> </div><div class=\"fbpostcontent\"><span class=\"fbauthorname\">"+post.from.name+"</span>";
                     var msg = post.message;
 					if (msg == undefined) {
 						msg = post.story;
@@ -39,8 +39,8 @@
 					case "status":
 						html = html +"<p>" + "<img src=\"" + post.picture  + "\"/>" + "<p>"+ msg;
 					}
-					e.innerHTML = html +"<hr>";
-					return {authorid : post.from.id};
+					e.innerHTML = html +"</div><hr>";
+					return;
                 };
 /*Set up function to be called when it's time to load the app. (bulk of work) */
                 var loadApp = function (accessToken) {
@@ -61,11 +61,10 @@
                         var i;
                         console.log(posts)
                         for (i = 0;i<posts.length;i++) {
-                            authorids.push(displayFBpost(dispArea,posts[i],null).authorid);
+                            displayFBpost(dispArea,posts[i],null);
 							displayedPostTimes[posts[i].created_time] = 1;
                         }
 						$(".FacebookPost").slideDown(2000);
-						console.log(authorids);
                         //create and send off a Facebook batch of requests for FB post user pictures
 						
                     });
@@ -84,6 +83,9 @@
 							for (i=0;i<posts.length;i++) {
 								if (displayedPostTimes[posts[i].created_time] == undefined) {
 									displayedPostTimes[posts[i].created_time] = 1;
+									displayFBpost(dispArea,posts[i],insertionSpot);
+									insertionSpot = posts[i];
+									$(".FacebookPost:first").slideDown(2000);
 									//var e = document.createElement("div");
 									//e.className = "addedPost";
 									//dispArea.insertBefore(e,insertionSpot);

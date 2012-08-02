@@ -7,6 +7,10 @@
     font-family: sans-serif;
     margin-top: 0px;
 }
+.FacebookPost
+{
+
+}
 .header
 {
     background-color:Black;
@@ -18,10 +22,20 @@
     padding: 6px;
     /*height: 10%;*/
 }
-.fbpostauthor
+.fbauthorname
 {
 	font-weight:bolder;
-	
+}
+.fbpostauthorpic
+{
+	width:50px;
+	display: table-cell;
+}
+.fbpostcontent
+{
+	vertical-align:top;
+	padding: 3px;
+	display: table-cell;
 }
 #loggedinheader
 {
