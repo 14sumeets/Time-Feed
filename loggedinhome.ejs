@@ -3,7 +3,6 @@
     <head> 
         <title>Time Feed -- Home</title>
          <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-        <script type="text/javascript" src="date.js"></script>
 
         <link href="StyleSheet1.css" rel="stylesheet" type="text/css"/>
     </head>
@@ -31,7 +30,7 @@
 					if (msg == undefined) {
 						msg = post.story;
 					}
-					switch (post.type) 
+					switch (post.type) //still missing some, like check-in
 					{
 					case "question":
 						html = html+ pictureHTML+ "<p>"+ msg;
@@ -43,14 +42,25 @@
 						html = html +pictureHTML+ "<p>"+ msg;
 						break;
 					case "photo":
-						html = html +pictureHTML+"<p>"+ msg;
+						html = html +pictureHTML+ "<p>"+ msg;
+						break;
+					case "checkin":
+						html = html +pictureHTML+ "<p>"+ msg;
 						break;
 					case "status":
-						html = html +pictureHTML+"<p>"+ msg;
+						html = html +pictureHTML+ "<p>"+ msg;
 					}
 					html = html +"<div class=\"fbaudiencearea\">";
 					
-					html = html +"1 Like | 8 Comments";
+					html = html +"<div class=\"fbactionbar\">1 Like | 8 Comments</div>";
+					//routine to display comments
+					if (post.comments.data != undefined) {
+						var i;
+						for (i=0;i<post.comments.data.length;i++) {
+							html = html + "<div class=\"fbcomment\"><div class=\"fbpostcommentauthorpic\">"+"<img src=\"https://graph.facebook.com/" + post.comments.data[i].from.id  + "/picture\"/> </div><div class=\"fbcommentcontent\"><span class=\"fbauthorname\">"+post.comments.data[i].from.name + " </span>"+post.comments.data[i].message+"</div></div>";
+						}
+					}
+					
 					
 					e.innerHTML = html +"</div></div><hr>";
 					return;
@@ -68,7 +78,7 @@
 					var displayedPostTimes = {};
                     FB.api('/me/home', function(response) {
                         console.log(response);
-                        var dispArea = document.getElementById('appwindow');
+                        var dispArea = document.getElementById('app');
                         var posts = response.data;
 						var authorids = [];
                         var i;
@@ -87,7 +97,7 @@
                         console.log("hello again")
                         FB.api('/me/home',function(response) {
                             var posts = response.data;
-                            var dispArea = document.getElementById('appwindow');
+                            var dispArea = document.getElementById('app');
                             var i;
 							var insertionSpot = dispArea.firstChild;
                             console.log("most recent: "+mostRecentTime)
@@ -169,7 +179,7 @@
             </script>
 <div id="maincontainer" style="display:inline">
 <div class="header" id="loggedinheader">Welcome, <span id="facebookname"></span> | Links | Links <div id="fbbutton"> <fb:login-button autologoutlink='true'></fb:login-button></div></div>
-<div id="appwindow"> 
+<div class="appwindow" id="app"> 
 </div>
 
 
