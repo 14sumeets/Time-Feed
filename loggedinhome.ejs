@@ -17,7 +17,16 @@
 					e.style.display = 'none';
 					region.insertBefore(e,insertionSpot);
 					var from = post.from.name;
-					var html = "<div class=\"fbpostauthorpic\">"+"<img src=\"https://graph.facebook.com/" + post.from.id  + "/picture\"/> </div><div class=\"fbpostcontent\"><span class=\"fbauthorname\">"+post.from.name+"</span>";
+					var pictureHTML = "";
+					if (post.picture != undefined) {
+						pictureHTML = "<p> <img style=\"display:none\" class=\"fbpostimage\" src=\"" + post.picture  + "\"/>";
+					}
+					
+					var html = "<div class=\"fbpostauthorpic\">"+"<img src=\"https://graph.facebook.com/" + post.from.id  + "/picture\"/> </div><div class=\"fbpostcontent\"><span class=\"fbauthorname\">"+post.from.name;
+					if (post.to != undefined) {
+						html = html + " > " + post.to.data[0].name;
+					}
+					html = html +"</span>";
                     var msg = post.message;
 					if (msg == undefined) {
 						msg = post.story;
@@ -25,21 +34,25 @@
 					switch (post.type) 
 					{
 					case "question":
-						html = html+  "<p>" + "<img style=\"display:none\" class=\"fbpostimage\" src=\"" + post.picture  + "\"/>" + "<p>"+ msg;
+						html = html+ pictureHTML+ "<p>"+ msg;
 						break;
 					case "link":
-						html = html+  "<p>" + "<img style=\"display:none\" class=\"fbpostimage\" src=\"" + post.picture  + "\"/>" + "<p>"+ msg;
+						html = html+ pictureHTML+ "<p>"+ msg;
 						break;
 					case "video":
-						html = html + "<p>" + "<img style=\"display:none\" class=\"fbpostimage\" src=\"" + post.picture  + "\"/>" + "<p>"+ msg;
+						html = html +pictureHTML+ "<p>"+ msg;
 						break;
 					case "photo":
-						html = html +"<p>" + "<img style=\"display:none\"  class=\"fbpostimage\"src=\"" + post.picture  + "\"/>" + "<p>"+ msg;
+						html = html +pictureHTML+"<p>"+ msg;
 						break;
 					case "status":
-						html = html +"<p>" + "<img style=\"display:none\" class=\"fbpostimage\" src=\"" + post.picture  + "\"/>" + "<p>"+ msg;
+						html = html +pictureHTML+"<p>"+ msg;
 					}
-					e.innerHTML = html +"</div><hr>";
+					html = html +"<div class=\"fbaudiencearea\">";
+					
+					html = html +"1 Like | 8 Comments";
+					
+					e.innerHTML = html +"</div></div><hr>";
 					return;
                 };
 /*Set up function to be called when it's time to load the app. (bulk of work) */
@@ -65,7 +78,7 @@
 							displayedPostTimes[posts[i].created_time] = 1;
                         }
 						$(".FacebookPost").slideDown(1000,function() {$(".fbpostimage").slideDown(2000);});
-                        //create and send off a Facebook batch of requests for FB post user pictures
+
 						
                     });
                     //Have a timer and periodically check for newer news feed items
@@ -86,17 +99,6 @@
 									displayFBpost(dispArea,posts[i],insertionSpot);
 									insertionSpot = posts[i];
 									$(".FacebookPost:first").slideDown(2000,function() {$(".fbpostimage").slideDown(2000);});
-									//var e = document.createElement("div");
-									//e.className = "addedPost";
-									//dispArea.insertBefore(e,insertionSpot);
-									//$(".addedPost:first").hide();
-	                                //var msg = posts[i].message;
-									//if (msg == undefined) {
-									//	msg = posts[i].story;
-									//}
-                                    //displayFBpost(dispArea,post[i],insertionSpot);
-		                            //e.innerHTML = "<b>"+posts[i].from.name +"</b>"+"<p>" + "<img src=\"" + posts[i].picture  + "\"/>" + "<p>"+ msg +"<hr>";
-									//$(".addedPost:first").slideDown(1000);
 								}
 							}
                         });
