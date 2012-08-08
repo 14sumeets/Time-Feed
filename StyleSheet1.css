@@ -4,8 +4,12 @@
     width:100%;
     margin-left: auto;
     margin-right: auto;
-    font-family: sans-serif;
+    font-family: arial;
     margin-top: 0px;
+}
+p
+{
+	word-wrap:break-word;
 }
 .FacebookPost
 {
@@ -35,10 +39,12 @@
 {
 	font-weight:bold;
 	border-bottom: 1px solid #F0F0F0 !important;
+	padding: 3px;
 }
 .fbcomment
 {
 	border-bottom: 1px solid #F0F0F0 !important;
+	padding: 6px;
 }
 .fbpostauthorpic
 {
