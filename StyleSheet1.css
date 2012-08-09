@@ -37,12 +37,11 @@ p /*long URLs not wrapping are still an issue, resolve by not using <p>?*/
 }
 .fbauthorname
 {
-	font-weight:bolder;
-    color: #0000000;
+	font-weight:bold;
+    color: #1122CC;
 }
 .fbaudiencearea
 {
-	font-size:13;
 	background-color:#E0E0E0;
 }
 .fbactionbar
@@ -115,7 +114,7 @@ p /*long URLs not wrapping are still an issue, resolve by not using <p>?*/
     border: 1px solid;
     padding: 20px;
     width: 500px;
-    background-color: #F0F0F0;
+    background-color: #FFFFFF;
     margin-left: auto;
     margin-right: auto;
 	
