@@ -13,10 +13,11 @@
 				var fbLike = function(linkElement,oid) {
 					//we shouldn't be able to like something 2x
 					var oid = linkElement.getAttribute('oid');
+					linkElement.innerHTML = "[-]";
 					FB.api('/'+oid+'/likes', 'post',function(response) {
 						console.log(response) //check for true
-						if (response) {
-							linkElement.innerHTML = "[-]";
+						if (!response) {
+							linkElement.innerHTML = "[+]";
 						}
 						//change number of likes
 					});
@@ -30,7 +31,7 @@
 					var from = post.from.name;
 					var pictureHTML = "";
 					if (post.picture != undefined) {
-						pictureHTML = "<div class=\"fbpostimage\" style=\"display:none\"> <img src=\"" + post.picture  + "\"/></div>";
+						pictureHTML = "<div class=\"fbpostimage\" style=\"display:none\"><img src=\"" + post.picture  + "\"/></div>";
 					}
 					
 					var html = "<div class=\"fbpostauthorpic\">"+"<img src=\"https://graph.facebook.com/" + post.from.id  + "/picture\"/> </div><div class=\"fbpostcontent\"><span class=\"fbauthorname\">"+post.from.name;
@@ -45,24 +46,24 @@
 					switch (post.type) //still missing some, like check-in
 					{
 					case "question":
-						html = html+ pictureHTML+ "<p>"+ msg;
+						html = html+ "<br />" +  "<br />" +  msg + "<br /><br />" + pictureHTML;
 						break;
 					case "link":
-						html = html+ pictureHTML+ "<p>"+ msg;
+						html = html+"<br />" + "<br />" +  msg + "<br /><br />" + pictureHTML;
 						break;
 					case "video":
-						html = html +pictureHTML+ "<p>"+ msg;
+						html = html+"<br />" + "<br />" +  msg + "<br /><br />" + pictureHTML;
 						break;
 					case "photo":
-						html = html +pictureHTML+ "<p>"+ msg;
+						html = html+ "<br />" + "<br />" + msg + "<br /><br />" + pictureHTML;
 						break;
 					case "checkin":
-						html = html +pictureHTML+ "<p>"+ msg;
+						html = html+"<br />" + "<br />" +  msg + "<br /><br />" + pictureHTML;
 						break;
 					case "status":
-						html = html +pictureHTML+ "<p>"+ msg;
+						html = html+"<br />" +  "<br />" + msg + "<br /><br />" + pictureHTML;
 					}
-					html = html +"<div class=\"fbaudiencearea\">";
+					html = html +"<br /><div class=\"fbaudiencearea\">";
 					//figure out number of likes and comments
 					var numlikes = 0;
 					var liketext = "s";
