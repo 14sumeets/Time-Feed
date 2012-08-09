@@ -12,14 +12,13 @@
                 //in the DIV of region, if given a nodeSpot, insert new node before it otherwise if null just append it to region's childlist
 				var fbLike = function(linkElement,oid) {
 					//we shouldn't be able to like something 2x
-					console.log(linkElement.getAttribute('oid'))
-					switch (linkElement.innerHTML) {
-						case "[+]":
+					var oid = linkElement.getAttribute('oid');
+					FB.api('/'+oid+'/likes', 'post',function(response) {
+						console.log(response) //check for true
+						if (response) {
 							linkElement.innerHTML = "[-]";
-							break;
-						case "[-]":
-							linkElement.innerHTML = "[+]";
-					}
+						}
+					});
 				};
 				
                 var displayFBpost = function(region,post,insertionSpot) {
