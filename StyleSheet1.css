@@ -1,6 +1,6 @@
 ﻿body
 {
-    background-color:#00CCFF;
+    background-color:#7abbe1;
     width:100%;
     margin-left: auto;
     margin-right: auto;
@@ -38,6 +38,7 @@ p /*long URLs not wrapping are still an issue, resolve by not using <p>?*/
 .fbauthorname
 {
 	font-weight:bolder;
+    color: #0000000;
 }
 .fbaudiencearea
 {
