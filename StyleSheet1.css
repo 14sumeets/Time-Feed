@@ -7,7 +7,16 @@
     font-family: arial;
     margin-top: 0px;
 }
-p
+a:link 
+{
+	text-decoration:none;
+}
+a:hover
+{
+	color:#00CCFF;
+	text-decoration:none;
+}
+p /*long URLs not wrapping are still an issue, resolve by not using <p>?*/
 {
 	word-wrap:break-word;
 }
@@ -67,6 +76,7 @@ p
 	vertical-align:top;
 	padding-left: 5px;
 	display: table-cell;
+	width: 100%;
 }
 #loggedinheader
 {
@@ -107,4 +117,5 @@ p
     background-color: #F0F0F0;
     margin-left: auto;
     margin-right: auto;
+	
 }

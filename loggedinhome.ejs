@@ -10,6 +10,18 @@
     <div id="fb-root"></div>
             <script type="text/javascript">
                 //in the DIV of region, if given a nodeSpot, insert new node before it otherwise if null just append it to region's childlist
+				var fbLike = function(linkElement,oid) {
+					//we shouldn't be able to like something 2x
+					console.log(linkElement.getAttribute('oid'))
+					switch (linkElement.innerHTML) {
+						case "[+]":
+							linkElement.innerHTML = "[-]";
+							break;
+						case "[-]":
+							linkElement.innerHTML = "[+]";
+					}
+				};
+				
                 var displayFBpost = function(region,post,insertionSpot) {
 					var e = document.createElement("div");
 					e.className = "FacebookPost";
@@ -18,7 +30,7 @@
 					var from = post.from.name;
 					var pictureHTML = "";
 					if (post.picture != undefined) {
-						pictureHTML = "<p> <img style=\"display:none\" class=\"fbpostimage\" src=\"" + post.picture  + "\"/>";
+						pictureHTML = "<div class=\"fbpostimage\" style=\"display:none\"> <img src=\"" + post.picture  + "\"/></div>";
 					}
 					
 					var html = "<div class=\"fbpostauthorpic\">"+"<img src=\"https://graph.facebook.com/" + post.from.id  + "/picture\"/> </div><div class=\"fbpostcontent\"><span class=\"fbauthorname\">"+post.from.name;
@@ -51,8 +63,24 @@
 						html = html +pictureHTML+ "<p>"+ msg;
 					}
 					html = html +"<div class=\"fbaudiencearea\">";
-					
-					html = html +"<div class=\"fbactionbar\">1 like | 8 comments</div>";
+					//figure out number of likes and comments
+					var numlikes = 0;
+					var liketext = "s";
+					var commenttext = "s";
+					var numcomments = 0;
+					if (post.likes != undefined) {
+						numlikes  = post.likes.count;
+						if (numlikes === 1) {
+							liketext = "";
+						}
+					}
+					if (post.comments != undefined ) {
+						numcomments = post.comments.count;
+						if (numcomments === 1) {
+							commenttext = "";
+						}
+					}
+					html = html +"<div class=\"fbactionbar\">"+numlikes+" like"+liketext+"<a oid=\""+post.id+"\" href=\"javascript:void(0)\" onclick=\"fbLike(this);\">[+]</a> | "+numcomments+" comment"+commenttext+"[+]</div>";
 					//routine to display comments
 					if (post.comments.data != undefined) {
 						var i;
