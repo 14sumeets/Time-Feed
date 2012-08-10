@@ -9,7 +9,24 @@
     <body>
     <div id="fb-root"></div>
             <script type="text/javascript">
-                //in the DIV of region, if given a nodeSpot, insert new node before it otherwise if null just append it to region's childlist
+                
+                var initializeLikeText = function(oid) {
+                	FB.api(
+					        {
+					            method: 'fql.query',
+					            query: 'SELECT user_id, object_id, post_id FROM like WHERE user_id=me() AND post_id=\''+oid+'\''
+					        },
+					        function(response) {
+					            //    do something with the response
+					            console.log(response.length)
+								if (response.length > 0) {
+									console.log("I LIKE THIS")
+								} else {
+									console.log("I DONT LIKE THIS")
+								}
+					        }
+					);
+                };
 				var fbLike = function(linkElement,oid) {
 					//we shouldn't be able to like something 2x
 					var oid = linkElement.getAttribute('oid');
@@ -27,25 +44,16 @@
 							numCommentsElement.innerHTML = response.comments.count;
 						});
 					});
-					FB.api(
-					        {
-					            method: 'fql.query',
-					            query: 'SELECT object_id FROM like WHERE user_id = me()'
-					        },
-					        function(data) {
-					            //    do something with the response
-								console.log(data)
-					        }
-					);
 					
 				};
-				
+				//in the DIV of region, if given a nodeSpot, insert new node before it otherwise if null just append it to region's childlist
                 var displayFBpost = function(region,post,insertionSpot) {
 					var e = document.createElement("div");
 					e.className = "FacebookPost";
 					e.style.display = 'none';
 					region.insertBefore(e,insertionSpot);
 					var from = post.from.name;
+					initializeLikeText(post.id);
 					var pictureHTML = "";
 					if (post.picture != undefined) {
 						pictureHTML = "<div class=\"fbpostimage\" style=\"display:none\"><img src=\"" + post.picture  + "\"/></div>";
@@ -53,7 +61,7 @@
 					
 					var html = "<div class=\"fbpostauthorpic\">"+"<img src=\"https://graph.facebook.com/" + post.from.id  + "/picture\"/> </div><div class=\"fbpostcontent\"><span class=\"fbauthorname\">"+post.from.name;
 					if (post.to != undefined) {
-						html = html + " > " + post.to.data[0].name;
+						html = html + " > " + post.to.data[0].name; //could be to multiple people! TODO: FIX THIS
 					}
 					html = html +"</span>";
                     var msg = post.message;
