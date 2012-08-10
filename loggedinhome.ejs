@@ -13,14 +13,31 @@
 				var fbLike = function(linkElement,oid) {
 					//we shouldn't be able to like something 2x
 					var oid = linkElement.getAttribute('oid');
+					var numLikesElement = linkElement.parentNode.getElementsByTagName('span')[0];
+					var numCommentsElement = linkElement.parentNode.getElementsByTagName('span')[1];
 					linkElement.innerHTML = "[-]";
+					console.log(numLikesElement)
 					FB.api('/'+oid+'/likes', 'post',function(response) {
-						console.log(response) //check for true
 						if (!response) {
 							linkElement.innerHTML = "[+]";
 						}
-						//change number of likes
+						//update number of likes and comments
+						FB.api(oid,'get',function (response) {
+							numLikesElement.innerHTML = response.likes.count;
+							numCommentsElement.innerHTML = response.comments.count;
+						});
 					});
+					FB.api(
+					        {
+					            method: 'fql.query',
+					            query: 'SELECT object_id FROM like WHERE user_id = me()'
+					        },
+					        function(data) {
+					            //    do something with the response
+								console.log(data)
+					        }
+					);
+					
 				};
 				
                 var displayFBpost = function(region,post,insertionSpot) {
@@ -64,7 +81,7 @@
 						html = html+"<br />" +  "<br />" + msg + "<br /><br />" + pictureHTML;
 					}
 					html = html +"<br /><div class=\"fbaudiencearea\">";
-					//figure out number of likes and comments
+					/******************figure out number of likes and comments************/
 					var numlikes = 0;
 					var liketext = "s";
 					var commenttext = "s";
@@ -81,8 +98,9 @@
 							commenttext = "";
 						}
 					}
-					html = html +"<div class=\"fbactionbar\">"+numlikes+" like"+liketext+"<a oid=\""+post.id+"\" href=\"javascript:void(0)\" onclick=\"fbLike(this);\">[+]</a> | "+numcomments+" comment"+commenttext+"[+]</div>";
-					//routine to display comments
+					html = html +"<div class=\"fbactionbar\"><span>"+numlikes+"</span> like"+liketext+"<a oid=\""+post.id+"\" href=\"javascript:void(0)\" onclick=\"fbLike(this);\">[+]</a> | <span>"+numcomments+"</span> comment"+commenttext+"[+]</div>";
+					
+					/***********display comments***********/
 					if (post.comments.data != undefined) {
 						var i;
 						for (i=0;i<post.comments.data.length;i++) {
