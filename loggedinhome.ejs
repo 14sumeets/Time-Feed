@@ -9,7 +9,48 @@
     <body>
     <div id="fb-root"></div>
             <script type="text/javascript">
-                
+                var uid = null;
+                var username = null;
+                var submitFBComment = function(tElement,event) {
+               		if (event.keyCode == 13 && tElement.value != "") {
+               			//if someone presses enter and they've entered in some text, create a new comment box, animate the post, and append the new comment, pushing down the create-comment box
+               			var msg = tElement.value;
+               			var elem = tElement;
+               			var parent = tElement.parentNode;
+               			var oid = tElement.getAttribute('oid');
+						var numLikesElement = parent.parentNode.parentNode.firstChild.getElementsByTagName('span')[0];
+						var numCommentsElement = parent.parentNode.parentNode.firstChild.getElementsByTagName('span')[1];
+               			var e = document.createElement("div");
+               			tElement.blur();
+						e.innerHTML = "<div class=\"fbcomment\"><div class=\"fbpostcommentauthorpic\">"+"<img width=\"32\" height=\"32\" src=\"https://graph.facebook.com/"+uid+"/picture\"/> </div><div class=\"fbcommentcontent\"><span class=\"fbauthorname\">"+username+" </span>"+msg+"</div>";
+						parent.parentNode.parentNode.insertBefore(e,parent.parentNode.parentNode.lastChild);
+						elem.value = "";
+               			FB.api('/'+oid+'/comments', 'post',{message : msg},function(response) {
+							console.log(response)
+							if(response.id) {
+								//Successful post! Update like and comment count.
+								FB.api(oid,'get',function (response) {
+									if (response.likes != undefined) {
+										numLikesElement.innerHTML = response.likes.count;
+									}
+									if (response.comments != undefined) {
+										numCommentsElement.innerHTML = response.comments.count;
+									}
+								});
+							} else {
+								//if the post wasn't successful, put back the user's comment message in the textarea to let them submit again
+								console.log("ERROR POSTING COMMENT")
+								elem.value = msg;
+							}
+						});
+               		}
+               	}
+               	var expandCommentArea = function(tElement) {
+               		tElement.setAttribute('rows',2);
+               	}
+               	var retractCommentArea = function(tElement) {
+               		tElement.setAttribute('rows',1);
+               	}
                 var initializeLikeText = function(element,oid) {
                 	FB.api(
 					        {
@@ -45,7 +86,6 @@
 					});
 					
 				};
-				//TODO
 				var fbUnLike = function(linkElement) {
 					//we shouldn't be able to like something 2x
 					var oid = linkElement.getAttribute('oid');
@@ -67,6 +107,7 @@
 				};
 				//in the DIV of region, if given a nodeSpot, insert new node before it otherwise if null just append it to region's childlist
                 var displayFBpost = function(region,post,insertionSpot) {
+                	/*********start by setting up the generic fb post design***************/
 					var e = document.createElement("div");
 					e.className = "FacebookPost";
 					e.style.display = 'none';
@@ -103,6 +144,7 @@
 					case "checkin":
 						html = html+"<br />" + "<br />" +  msg + "<br /><br />" + pictureHTML;
 						break;
+					case "offer":
 					case "status":
 						html = html+"<br />" +  "<br />" + msg + "<br /><br />" + pictureHTML;
 					}
@@ -129,10 +171,13 @@
 					if (post.comments.data != undefined) {
 						var i;
 						for (i=0;i<post.comments.data.length;i++) {
-							html = html + "<div class=\"fbcomment\"><div class=\"fbpostcommentauthorpic\">"+"<img src=\"https://graph.facebook.com/" + post.comments.data[i].from.id  + "/picture\"/> </div><div class=\"fbcommentcontent\"><span class=\"fbauthorname\">"+post.comments.data[i].from.name + " </span>"+post.comments.data[i].message+"</div></div>";
+							html = html + "<div class=\"fbcomment\"><div class=\"fbpostcommentauthorpic\">"+"<img width=\"32\" height=\"32\" src=\"https://graph.facebook.com/" + post.comments.data[i].from.id  + "/picture\"/> </div><div class=\"fbcommentcontent\"><span class=\"fbauthorname\">"+post.comments.data[i].from.name + " </span>"+post.comments.data[i].message+"</div></div>";
 						}
-					}	
-					e.innerHTML = html +"</div></div><hr>";
+					}
+					/************create a comment box with user's profile picture****************/
+
+
+					e.innerHTML = html +"<div class=\"fbcomment\"> <div class=\"fbpostcommentauthorpic\">"+"<img width=\"32\" height=\"32\" src=\"https://graph.facebook.com/"+uid+"/picture\"/> </div><div class=\"fbcommentcontent\"><textarea oid=\""+post.id+"\" onkeydown=\"submitFBComment(this,event);\" onblur=\"retractCommentArea(this);\" onfocus=\"expandCommentArea(this);\" placeholder=\"Write a comment...\" rows=\"1\" cols=\"45\"></textarea></div></div></div></div><hr>";
 					initializeLikeText(e.childNodes[1].lastChild.firstChild.childNodes[2],post.id);
 					return;
                 };
@@ -144,6 +189,7 @@
                     //Make nav bar welcome the user (display the name)
                     FB.api('/me', function (response) {
                         document.getElementById('facebookname').innerHTML = response.name;
+                        username = response.name;
                     });
                     //Load news feed + Display initial news feed items + Retrieve authorIds to query their profile pics and show them in their posts (use a hash for optimization?)
                     //*************************************************
@@ -205,7 +251,7 @@
                             // the user's ID, a valid access token, a signed
                             // request, and the time the access token 
                             // and signed request each expire
-                            var uid = response.authResponse.userID;
+                            uid = response.authResponse.userID;
                             var accessToken = response.authResponse.accessToken;
                             if(!loadedContent) {
                                 loadApp(accessToken);

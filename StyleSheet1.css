@@ -63,7 +63,7 @@ p /*long URLs not wrapping are still an issue, resolve by not using <p>?*/
 }
 .fbpostcommentauthorpic
 {
-	width:50px;
+	width:32px;
 	display: table-cell;
 }
 .fbcommentcontent
@@ -71,6 +71,11 @@ p /*long URLs not wrapping are still an issue, resolve by not using <p>?*/
 	vertical-align:top;
 	padding-left: 5px;
 	display: table-cell;
+}
+textarea
+{ 
+    resize:vertical;
+    font-family: sans-serif;
 }
 .fbpostcontent
 {
