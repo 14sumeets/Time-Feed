@@ -7,20 +7,20 @@ body
     margin-right: auto;
     font-family: sans-serif;
     margin-top: 0px;
-    font-size: 13px;
+	font-size: 13px;
 }
 a:link 
 {
-    text-decoration:none;
+	text-decoration:none;
 }
 a:hover
 {
-    color:#00CCFF;
-    text-decoration:none;
+	color:#00CCFF;
+	text-decoration:none;
 }
 p /*long URLs not wrapping are still an issue, resolve by not using <p>?*/
 {
-    word-wrap:break-word;
+	word-wrap:break-word;
 }
 .FacebookPost
 {
@@ -39,39 +39,39 @@ p /*long URLs not wrapping are still an issue, resolve by not using <p>?*/
 }
 .fbauthorname
 {
-    font-weight:bold;
+	font-weight:bold;
     color: #1122CC;
 }
 .fbaudiencearea
 {
-    background-color:#F1F2FC;
+	background-color:#F1F2FC;
 }
 .fbactionbar
 {
-    font-weight:bold;
-    border-bottom: 1px solid #FFFFFF !important;
-    padding: 3px;
+	font-weight:bold;
+	border-bottom: 1px solid #FFFFFF !important;
+	padding: 3px;
 }
 .fbcomment
 {
-    border-bottom: 1px solid #FFFFFF !important;
-    padding: 6px;
+	border-bottom: 1px solid #FFFFFF !important;
+	padding: 6px;
 }
 .fbpostauthorpic
 {
-    width:50px;
-    display: table-cell;
+	width:50px;
+	display: table-cell;
 }
 .fbpostcommentauthorpic
 {
-    width:32px;
-    display: table-cell;
+	width:32px;
+	display: table-cell;
 }
 .fbcommentcontent
 {
-    vertical-align:top;
-    padding-left: 5px;
-    display: table-cell;
+	vertical-align:top;
+	padding-left: 5px;
+	display: table-cell;
 }
 textarea
 { 
@@ -80,10 +80,10 @@ textarea
 }
 .fbpostcontent
 {
-    vertical-align:top;
-    padding-left: 5px;
-    display: table-cell;
-    width: 100%;
+	vertical-align:top;
+	padding-left: 5px;
+	display: table-cell;
+	width: 100%;
 }
 #loggedinheader
 {
@@ -117,7 +117,8 @@ textarea
 {
    /* position: relative;
    top: 20px; */
-
+   float:right;
+    
     border-color: Black;
     border: 1px solid;
     padding: 20px;
@@ -125,50 +126,29 @@ textarea
     background-color: #FFFFFF;
     /*margin-left: auto;
     margin-right: auto;
-    */
+	*/
 }
 
 
 /* Body of Logged In Page */
 #body_container {
     padding: 20px;
-    width:800px ;
+    width:775px ;
     margin-left:auto;
     margin-right:auto;
 
 }
 #add_twitter { 
-
-    padding: 5px 0px 5px 25px;
- 
-    background-color:#FFFFFF;
-    border-color: Black;
-    border: 1px solid;
-    margin:10px;
-}
-
-#profile
-{
-    padding:15px;
-    background-color:#FFFFFF;
-    border-color: Black;
-    border: 1px solid;
-    height:100px;
-    margin-bottom:10px;
-    margin-right:10px;
-}
-
-
-#main_content {
-    float:right;
-    
-
-}
-
-#side_bar {
-
     float:left;
+    padding: 5px 0px 5px 25px;
+    width: 200px;
+    background-color:#FFFFFF;
+    border-color: Black;
+    border: 1px solid;
 }
+
+
+
 
 
 
