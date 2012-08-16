@@ -132,21 +132,21 @@ textarea
 /* Body of Logged In Page */
 #body_container {
     padding: 20px;
-    width:800px ;
+    width:715px ;
     margin-left:auto;
     margin-right:auto;
 
 }
 #add_twitter { 
 
-    padding: 5px 0px 5px 25px;
+    padding: 5px;
  
     background-color:#FFFFFF;
     border-color: Black;
     border: 1px solid;
-    margin:10px;
+ 
 }
-
+/*
 #profile
 {
     padding:15px;
@@ -157,7 +157,7 @@ textarea
     margin-bottom:10px;
     margin-right:10px;
 }
-
+*/
 
 #main_content {
     float:right;
