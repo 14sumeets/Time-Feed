@@ -64,8 +64,19 @@
 					document.getElementById('fb-root').appendChild(e);
 				} ());
     </script>
-	<script type="text/javascript">
-	</script>
+
+	<script type="text/javascript" src="http://platform.twitter.com/anywhere.js?id=gZXSdzZI4D56hCOoOj1A&v=1">
+	   //Load Twitter's @Anywhere API (pretty fast)
+    </script>
+    <script type="text/javascript">
+        //Use Twitter's @Anywhere API
+        console.log("getting the twttr object")
+        console.log(twttr)
+        twttr.anywhere(function (T) {
+            T("#twitter_login").connectButton({ size: "medium" });
+        });
+    </script>
+
 
 
 
@@ -73,8 +84,8 @@
 	<div class="header" id="loggedinheader">Welcome, <span id="facebookname"></span> <div id="fbbutton"> <fb:login-button autologoutlink='true'></fb:login-button></div></div>
 		<div id = "body_container">
 			<div id = "side_bar">
-		      <div id = "Add_Twitter"> <h3> Let's add some twitter.<hr> </h3>
-                <img src="images/twitterlogin.png" />
+		      <div id = "Add_Twitter"> <h3>Integrate with Twitter<hr> </h3>
+                <span id="twitter_login"></span>
 		    </div></div>
 			<div class="appwindow" id="app"></div> 
  		</div>
