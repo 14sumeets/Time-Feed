@@ -80,6 +80,11 @@
                 $("#twitter_auth").append('<button id="signout" type="button">Sign out of Twitter</button>');
                 $("#twitter_auth").bind("click", function () {
                     twttr.anywhere.signOut();
+                    T("#twitter_auth").connectButton({ size: "medium",authComplete: function(user) {
+                            console.log("authenticated with twitter!");
+                            console.log(user); 
+                        } 
+                    });
                 });
             } else {
                 T("#twitter_auth").connectButton({ size: "medium",authComplete: function(user) {
