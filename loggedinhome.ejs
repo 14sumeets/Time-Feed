@@ -64,8 +64,30 @@
 					document.getElementById('fb-root').appendChild(e);
 				} ());
     </script>
-	<script type="text/javascript">
-	</script>
+
+	<script type="text/javascript" src="http://platform.twitter.com/anywhere.js?id=gZXSdzZI4D56hCOoOj1A&v=1">
+	   //Load Twitter's @Anywhere API (pretty fast)
+    </script>
+    <script type="text/javascript">
+        //Use Twitter's @Anywhere API
+        console.log("getting the twttr object")
+        console.log(twttr)
+        //create the twitter authentication button
+        twttr.anywhere(function (T) {
+            if(T.isConnected()) {
+                console.log("HEY! YOU'RE AUTHED")
+                console.log(T)
+            } else {
+                T("#twitter_login").connectButton({ size: "medium",authComplete: function(user) {
+                        console.log("authenticated with twitter!");
+                        console.log(user); 
+                    } 
+                });
+            }
+
+        });
+    </script>
+
 
 
 
@@ -73,11 +95,12 @@
 	<div class="header" id="loggedinheader">Welcome, <span id="facebookname"></span> <div id="fbbutton"> <fb:login-button autologoutlink='true'></fb:login-button></div></div>
 		<div id = "body_container">
 			<div id = "side_bar">
+
                             <div id = "profile" class="dashboard_element">
                                 <div id="profile_pic"> </div> <span id="profile_name"> </span>
                             </div>
 
-		<div id = "Add_Twitter" class="dashboard_element"> Let's add some twitter. 
+		<div id = "Add_Twitter" class="dashboard_element"> <span id="twitter_login"></span>
 		</div></div>
 			<div class="appwindow" id="app"></div> 
  		</div>
