@@ -202,6 +202,7 @@
                     FB.api('/me', function (response) {
                         document.getElementById('facebookname').innerHTML = response.name;
                         document.getElementById('profile_pic').innerHTML = '<img src=\"http://graph.facebook.com/'+response.id+'/picture\" />'
+                        document.getElementById('profile_name').innerHTML = response.name;
                         console.log(response)
                         username = response.name;
                     });

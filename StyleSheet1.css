@@ -163,7 +163,18 @@ textarea
 }
 */
 
+#profile_pic {
+    display:table-cell;
+    width:50px;
+    padding:5px;
 
+}
+
+#profile_name {
+    display:table-cell;
+    padding:5px;
+
+}
 #side_bar {
     float:left;
     width:200px;
