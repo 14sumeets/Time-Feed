@@ -74,11 +74,16 @@
         console.log(twttr)
         //create the twitter authentication button
         twttr.anywhere(function (T) {
-            T("#twitter_login").connectButton({ size: "medium",authComplete: function(user) {
-                    console.log("authenticated with twitter!");
-                    console.log(user); 
-                } 
-            });
+            if(T.isConnectected()) {
+                console.log("HEY! YOU'RE AUTHED")
+                console.log(T)
+            } else {
+                T("#twitter_login").connectButton({ size: "medium",authComplete: function(user) {
+                        console.log("authenticated with twitter!");
+                        console.log(user); 
+                    } 
+                });
+            }
 
         });
     </script>
