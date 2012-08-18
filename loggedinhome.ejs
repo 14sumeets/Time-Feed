@@ -72,9 +72,17 @@
         //Use Twitter's @Anywhere API
         console.log("getting the twttr object")
         console.log(twttr)
+        //create the twitter authentication button
         twttr.anywhere(function (T) {
-            T("#twitter_login").connectButton({ size: "medium" });
+            T("#twitter_login").connectButton({ size: "medium",authComplete: function(user) {
+                    console.log("authenticated with twitter!");
+                    console.log(user); 
+                } 
+            });
+            
         });
+
+  });
     </script>
 
 
