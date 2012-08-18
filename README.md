@@ -27,12 +27,9 @@ Contact: sumeet.sharma@berkeley.edu
 by Facebook's API)
 
 ## TODO
--implement facebook posts (pulling facebook news feed)
-
-  -start by loading a page from the news feed and displaying it in a format
-  
-  -figure out how to retrieve real-time updates to the news feed and "append" them to the top of the news feed (moving the other posts down the page)
-
+-implement Twitter stream, mixing them with facebook posts, sorted by timestamp.
+-allow users to log in and out of Twitter.
+-fix facebook comment expansion
 
 
 -curvy edge
