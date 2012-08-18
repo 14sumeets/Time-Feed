@@ -201,6 +201,8 @@
                     //Make nav bar welcome the user (display the name)
                     FB.api('/me', function (response) {
                         document.getElementById('facebookname').innerHTML = response.name;
+                        document.getElementById('profile_pic').innerHTML = '<img src=\"http://graph.facebook.com/'+response.id+'/picture\" />'
+                        console.log(response)
                         username = response.name;
                     });
                     //Load news feed + Display initial news feed items + Retrieve authorIds to query their profile pics and show them in their posts (use a hash for optimization?)
