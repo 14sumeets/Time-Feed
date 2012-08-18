@@ -173,6 +173,7 @@ textarea
 #profile_name {
     display:table-cell;
     padding:5px;
+    vertical-align:middle;
 
 }
 #side_bar {
