@@ -139,6 +139,8 @@
 					
 				};
 
+
+				//Sets the author and recipient of a post to be linked.
 				var setPostLinks = function(ids, postID) { 
 						var name, e;
 						//alert("posts are being linked");
@@ -166,6 +168,28 @@
 
 					}
 
+
+				};
+
+				//Sets the author of all comments of a post to be turned into links to their profile page
+				var setCommentLinks = function(comments) { 
+					var i;
+					var name, e;
+					for(i=0; i<comments.data.length; i++) {
+						e = document.getElementById("commentauthor" + comments.data[i].id);
+						name = e.innerHTML;
+						e.innerHTML = "<a href=\"https://www.facebook.com/" + comments.data[i].id + "\">" + name + "</a>"; 
+
+						/*FB.api(comments.data[i].from.id, 'get', function(response) {
+							 debugger;
+							e = document.getElementById("commentauthor" + comments.data[i].id);
+							name = e.innerHTML;
+							e.innerHTML = "<a href=\"" + response.link + "\">" + name + "</a>"; 
+
+						});*/
+
+
+					}
 
 				};
 
@@ -238,15 +262,16 @@
 					if (post.comments.data != undefined) {
 						var i;
 						for (i=0;i<post.comments.data.length;i++) {
-							html = html + "<div cid=\""+post.comments.data[i].id+"\" class=\"fbcomment\"><div class=\"fbpostcommentauthorpic\">"+"<img width=\"32\" height=\"32\" src=\"https://graph.facebook.com/" + post.comments.data[i].from.id  + "/picture\"/> </div><div class=\"fbcommentcontent\"><span class=\"fbauthorname\">"+post.comments.data[i].from.name + " </span>"+post.comments.data[i].message+"</div></div>";
+							html = html + "<div cid=\""+post.comments.data[i].id+"\" class=\"fbcomment\"><div class=\"fbpostcommentauthorpic\">"+"<img width=\"32\" height=\"32\" src=\"https://graph.facebook.com/" + post.comments.data[i].from.id  + "/picture\"/> </div><div class=\"fbcommentcontent\"><span class=\"fbauthorname\" id=\"commentauthor" + post.comments.data[i].id + "\">"+post.comments.data[i].from.name + " </span>"+post.comments.data[i].message+"</div></div>";
 						}
 					}
 					/************create a comment box with user's profile picture****************/
 					e.innerHTML = html +"<div class=\"fbcomment\"> <div class=\"fbpostcommentauthorpic\">"+"<img width=\"32\" height=\"32\" src=\"https://graph.facebook.com/"+uid+"/picture\"/> </div><div class=\"fbcommentcontent\"><textarea oid=\""+post.id+"\" onkeydown=\"submitFBComment(this,event);\" onblur=\"retractCommentArea(this);\" onfocus=\"expandCommentArea(this);\" placeholder=\"Write a comment...\" rows=\"1\" cols=\"45\"></textarea></div></div></div></div><hr>";
 					initializeLikeText(e.childNodes[1].lastChild.firstChild.childNodes[2],post.id);
 					setPostLinks(ids, post.id);
+					if(post.comments.data != undefined) { setCommentLinks(post.comments); }
 				
-                return;
+                	return;
                 };
 
 
@@ -258,7 +283,7 @@
                         document.getElementById('facebookname').innerHTML = response.name;
                         document.getElementById('profile_pic').innerHTML = '<img src=\"http://graph.facebook.com/'+response.id+'/picture\" />'
                         document.getElementById('profile_name').innerHTML = response.name;
-                        console.log(response)
+                        
                         username = response.name;
                     });
                     //Load news feed + Display initial news feed items + Retrieve authorIds to query their profile pics and show them in their posts (use a hash for optimization?)
