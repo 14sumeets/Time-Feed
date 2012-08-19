@@ -103,7 +103,10 @@
 						}
 						//update number of likes and comments
 						FB.api(oid,'get',function (response) {
-							numLikesElement.innerHTML = response.likes.count;
+							debugger;
+								if(response.likes != undefined) { numLikesElement.innerHTML = response.likes.count; }
+								else { numLikesElement.innerHTML = "0";}
+							
 							numCommentsElement.innerHTML = response.comments.count;
 						});
 					});
@@ -111,41 +114,88 @@
 				};
 				var fbUnLike = function(linkElement) {
 					//we shouldn't be able to like something 2x
+					//debugger;
+
 					var oid = linkElement.getAttribute('oid');
 					var numLikesElement = linkElement.parentNode.getElementsByTagName('span')[0];
 					var numCommentsElement = linkElement.parentNode.getElementsByTagName('span')[1];
 					linkElement.innerHTML = "[+]";
 					linkElement.setAttribute('onclick','fbLike(this);');
+					//debugger;
 					FB.api('/'+oid+'/likes', 'delete',function(response) {
 						if (!response) {
 							linkElement.innerHTML = "[+]";
 						}
+						console.log("Unliking Debug");
 						//update number of likes and comments
 						FB.api(oid,'get',function (response) {
-							numLikesElement.innerHTML = response.likes.count;
+						//	alert(response.likes.count);
+							//alert(response);
+							if(response.likes != undefined) { numLikesElement.innerHTML = response.likes.count; }
+								else { numLikesElement.innerHTML = "0";}						
 							numCommentsElement.innerHTML = response.comments.count;
 						});
 					});
 					
 				};
+
+				var setPostLinks = function(ids, postID) { 
+						var name, e;
+						//alert("posts are being linked");
+					FB.api(ids[0], 'get', function(response) { 
+						
+					 e = document.getElementById("fbsender" + postID);
+					 name = e.innerHTML;
+
+					 e.innerHTML = "<a href=\"" + response.link + "\">" + name + "</a>"; 
+
+					
+					});
+
+					if(ids[1] != null)
+					{
+						FB.api(ids[1], 'get', function(response) { 
+						
+					 e = document.getElementById("fbrecipient" + postID);
+					 name = e.innerHTML;
+
+					 e.innerHTML = "<a href=\"" + response.link + "\">" + name + "</a>"; 
+
+					
+					});
+
+					}
+
+
+				};
+
 			//given a post object, display it in region before insertionSpot. 
                 var displayFBpost = function(region,post,insertionSpot) {
                 	/*********start by setting up the generic fb post design***************/
+                	var ids = new Array();
 					var e = document.createElement("div");
 					e.className = "FacebookPost";
 					e.style.display = 'none';
 					region.insertBefore(e,insertionSpot);
+					var userLink = "";
 					var from = post.from.name;
 					var pictureHTML = "";
 					if (post.picture != undefined) {
 						pictureHTML = "<div class=\"fbpostimage\" style=\"display:none\"><img src=\"" + post.picture  + "\"/></div>";
 					}
+
 					
-					var html = "<div class=\"fbpostauthorpic\">"+"<img src=\"https://graph.facebook.com/" + post.from.id  + "/picture\"/> </div><div class=\"fbpostcontent\"><span class=\"fbauthorname\">"+post.from.name;
+					//Get the id of the post author
+					ids[0] = post.from.id;
+			
+					
+					var html = "<div class=\"fbpostauthorpic\">"+"<img src=\"https://graph.facebook.com/" + post.from.id  + "/picture\"/> </div><div class=\"fbpostcontent\"><span class=\"fbauthorname\" id=\"fbsender" + post.id + "\">"+post.from.name + "</span>";
+		
 					if (post.to != undefined) {
-						html = html + " > " + post.to.data[0].name; //could be to multiple people! TODO: FIX THIS
+					html = html + " > " + "<span class=\"fbauthorname\" id=\"fbrecipient" + post.id + "\">" + post.to.data[0].name + "</span>"; //could be to multiple people! TODO: FIX THIS
+						ids[1]= post.to.data[0].id;
 					}
-					html = html +"</span>";
+					//html = html +"</span>";
                     var msg = post.message;
 					if (msg == undefined) {
 						msg = post.story;
@@ -167,6 +217,9 @@
 					var liketext = "s";
 					var commenttext = "s";
 					var numcomments = 0;
+
+					//alert(Object.keys(post));
+					
 					if (post.likes != undefined) {
 						numlikes  = post.likes.count;
 						if (numlikes === 1) {
@@ -180,7 +233,7 @@
 						}
 					}
 					/**************Create the action bar *************/
-					html = html +"<div class=\"fbactionbar\"><span>"+numlikes+"</span> like"+liketext+"<a oid=\""+post.id+"\" href=\"javascript:void(0)\" onclick=\"fbLike(this);\">[+]</a> | <span>"+numcomments+"</span> comment"+commenttext+"<a oid=\""+post.id+"\" href=\"javascript:void(0)\" onclick=\"showMoreComments(this);\">[+]</a></div>";
+					html = html +"<div class=\"fbactionbar\"><span id=\"numlikes\">"+numlikes+"</span> like"+liketext+"<a oid=\""+post.id+"\" href=\"javascript:void(0)\" onclick=\"fbLike(this);\">[+]</a> | <span>"+numcomments+"</span> comment"+commenttext+"<a oid=\""+post.id+"\" href=\"javascript:void(0)\" onclick=\"showMoreComments(this);\">[+]</a></div>";
 					/***********display comments***********/
 					if (post.comments.data != undefined) {
 						var i;
@@ -191,7 +244,9 @@
 					/************create a comment box with user's profile picture****************/
 					e.innerHTML = html +"<div class=\"fbcomment\"> <div class=\"fbpostcommentauthorpic\">"+"<img width=\"32\" height=\"32\" src=\"https://graph.facebook.com/"+uid+"/picture\"/> </div><div class=\"fbcommentcontent\"><textarea oid=\""+post.id+"\" onkeydown=\"submitFBComment(this,event);\" onblur=\"retractCommentArea(this);\" onfocus=\"expandCommentArea(this);\" placeholder=\"Write a comment...\" rows=\"1\" cols=\"45\"></textarea></div></div></div></div><hr>";
 					initializeLikeText(e.childNodes[1].lastChild.firstChild.childNodes[2],post.id);
-					return;
+					setPostLinks(ids, post.id);
+				
+                return;
                 };
 
 
