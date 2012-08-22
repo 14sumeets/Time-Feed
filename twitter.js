@@ -1,24 +1,25 @@
 console.log("USING TWITTER")
 //do stuff when we realize we're logged in
 var loggedInTasks = function(user) {
-    // triggered when auth completed successfully
-    	console.log("authenticated with twitter!");
-		console.log(user);
-        $("#twitter_signout").replaceWith('<button id="signout" type="button">Sign out of Twitter</button>');
-        $("#twitter_signout").bind("click", function () {
-        	console.log("LOGGING OUT OF TWITTER")
-			twttr.anywhere.signOut();
-			$("#twitter_signout").replaceWith("");
-		});
+    // show the logged-in to twitter view
+    console.log("authenticated with twitter!");
+    $("#twittersignoutbutton").css({'display':'inline'})
 }
 var loggedOutTasks = function () {
+	//logged out of twitter view
 	console.log("YOU ARE NOT LOGGED IN")
+	$("#twittersignoutbutton").css({'display':'none'})
 
 }
 twttr.anywhere(function (T) {
     T("#twitter_auth").connectButton({
       	authComplete: loggedInTasks,
       	signOut: loggedOutTasks
+	});
+	$("#twittersignoutbutton").bind("click", function () {
+		//sign out when our button is clicked
+    	console.log("LOGGING OUT OF TWITTER")
+		twttr.anywhere.signOut();
 	});
     if(T.isConnected()) {
     	loggedInTasks();
