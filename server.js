@@ -77,9 +77,9 @@ app.get('/fbnewsfeed', function (req, res) {
 });*/
 app.use(express.static(__dirname));
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 80);
 console.log("Server running on port:")
-console.log(process.env.PORT || 3000)
+console.log(process.env.PORT || 80)
 
 //Initialize Facebook Subscription updates for all authenticated users
 
