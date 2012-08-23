@@ -35,7 +35,7 @@ p /*long URLs not wrapping are still an issue, resolve by not using <p>?*/
 .header
 {
     background-color:Black;
-    font-size:x-large;
+    font-size:medium;
     font-weight:bolder;
     font-style:italic;
     color:Gray;
@@ -109,7 +109,7 @@ textarea
 {
     float: right;
     position: relative;
-    top: -3px;
+    top: -2px;
 }
 #splasharea
 {

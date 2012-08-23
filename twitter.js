@@ -4,6 +4,15 @@ var loggedInTasks = function(user) {
     // show the logged-in to twitter view
     console.log("authenticated with twitter!");
     $("#twittersignoutbutton").css({'display':'inline'})
+    //fetch the latest feed of Tweets
+    getAndDisplayTweets(user);
+
+
+
+
+
+
+
 }
 var loggedOutTasks = function () {
 	//logged out of twitter view
@@ -11,6 +20,64 @@ var loggedOutTasks = function () {
 	$("#twittersignoutbutton").css({'display':'none'})
 
 }
+var hello = function () {
+	console.log("ERRRMAGERRD")
+	alert("HI");
+}
+var getAndDisplayTweets = function(user) {
+	console.log("current user is:")
+	console.log(user)
+    /*$.ajax({
+            url: 'http://twitter.com/status/user_timeline/SumeetSharma126.json',
+            type: 'GET',
+            dataType: 'jsonp',
+            jsonp: false,
+            data: {jsonpCallback: "hello"},
+            data: {
+                screen_name: user.screenName,
+                include_rts: true,
+                count: 25,
+                include_entities: true
+            },
+            success: function(data, textStatus, xhr) {
+ 				console.log("Successful ajax request!")
+                console.log(data)
+                console.log(textStatus)                 
+            },
+            error: function(err) {
+            	console.log("ERROR:")
+            	console.log(err)
+            }
+ 
+    });*/
+	 $.ajax({
+                    url: 'http://twitter.com/status/user_timeline/SumeetSharma126.json?count=10',
+                    dataType: 'jsonp',
+                    beforeSend: function(xhr) {
+                    	//xhr.setRequestHeader("Authorization","OAuth")
+                    	console.log("the header")
+                    	console.log(xhr)
+                    },
+
+                    success: function(data,status){
+                        var text = '';
+                        var len = data.length;
+                        for(var i=0;i<len;i++){
+                            twitterEntry = data[i];
+                            text += '<p><img src = "' + twitterEntry.user.profile_image_url_https +'"/>' + twitterEntry['text'] + '</p>'
+                        }
+                        console.log("HURRAY");
+                        console.log(data)
+                        console.log(status)
+                    }
+    });
+}
+
+
+
+
+
+
 twttr.anywhere(function (T) {
     T("#twitter_auth").connectButton({
       	authComplete: loggedInTasks,
@@ -22,7 +89,7 @@ twttr.anywhere(function (T) {
 		twttr.anywhere.signOut();
 	});
     if(T.isConnected()) {
-    	loggedInTasks();
+    	loggedInTasks(T.currentUser);
     } else {
     	loggedOutTasks();
     }
@@ -30,28 +97,3 @@ twttr.anywhere(function (T) {
 });
 
 
-
-
-/*twttr.anywhere(function (T) {
-        if(T.isConnected()) {
-            console.log("HEY! YOU'RE AUTHED")
-            console.log(T)
-            $("#twitter_auth").append('<button id="signout" type="button">Sign out of Twitter</button>');
-            $("#twitter_auth").bind("click", function () {
-                twttr.anywhere.signOut();
-                $("#twitter_auth").replaceWith("");
-                T("#twitter_auth").connectButton({ size: "medium",authComplete: function(user) {
-                        console.log("authenticated with twitter!");
-                        console.log(user); 
-                    } 
-                });
-            });
-        } else {
-            T("#twitter_auth").connectButton({ size: "medium",authComplete: function(user) {
-                    console.log("authenticated with twitter!");
-                    console.log(user);
-                     
-                } 
-            });
-        }
-    });*/
