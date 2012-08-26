@@ -60,7 +60,7 @@ app.get('/twitterAuth',function(req,res) {
     res.redirect(twitterAuthorizationLink);
 });
 app.get('/closeWindow',function(req,res) {
-    res.send('<script type="text/javascript">window.close()</script>');
+    res.send('<script type="text/javascript">window.onload = function () {window.close();};</script>');
 });
 
 app.get('/', function (req, res) {
