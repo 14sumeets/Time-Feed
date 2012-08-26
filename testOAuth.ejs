@@ -1,7 +1,127 @@
 <html>
+<head>
+	<SCRIPT TYPE="text/javascript">
+<!--
+function popup(mylink, windowname)
+{
+if (! window.focus)return true;
+var href;
+if (typeof(mylink) == 'string')
+   href=mylink;
+else
+   href=mylink.href;
+window.open(href, windowname, 'width=400,height=200,scrollbars=yes');
+return false;
+}
+//-->
+</SCRIPT>
+</head>
 <body>
-<script src="fb.js" type="text/javascript">
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="/sha1.js"></script>
+<script type="text/javascript">
+/*
+    var randomString = function (string_length) {
+		var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+		var randomstring = '';
+		for (var i=0; i<string_length; i++) {
+			var rnum = Math.floor(Math.random() * chars.length);
+			randomstring += chars.substring(rnum,rnum+1);
+		}
+		return randomstring;
+	}
+	var hexToBase64 = function (str) {
+  		return btoa(String.fromCharCode.apply(null,
+    		str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" "))
+  		);
+	}
+	var getOauthSig = function (oauth_consumer_key,oauth_nonce,consumer_secret,oauth_token_secret,oauth_timestamp,oauth_token) {
+		var method = 'GET',i;
+		var baseurl = 'https://api.twitter.com/1/statuses/home_timeline.json';
+		var sig = '';
+		var encodedKeys = [];
+		var keys = ['include_entities','oauth_consumer_key','oauth_nonce','oauth_signature_method','oauth_timestamp','oauth_token','oauth_version'];
+		var kvs = {
+			'include_entities':'true',
+			'oauth_consumer_key':oauth_consumer_key,
+			'oauth_nonce':oauth_nonce,
+			'oauth_signature_method':'HMAC-SHA1',
+			'oauth_timestamp':oauth_timestamp,
+			'oauth_token':oauth_token, //getOauthToken(),
+			'oauth_version':'1.0'
+		};
+		for (i=0;i<keys.length;i++) {
+			keys[i] = encodeURIComponent(keys[i]);
+			sig = sig + keys[i] + '='+encodeURIComponent(kvs[keys[i]]);
+			if (i<(keys.length-1)) {
+				sig = sig + '&';
+			}
+		}
+		console.log("THE SIGNATURE")
+		var out = method + '&';
+		var sbs = out + encodeURIComponent(baseurl) + '&' + encodeURIComponent(sig);
+
+		console.log(sbs);
+		//make the signing key
+		var signingkey = encodeURIComponent(consumer_secret)+'&'+encodeURIComponent(oauth_token_secret);
+		console.log(signingkey);
+		//do the SHA-1
+		var shaObj = new jsSHA(sbs, "ASCII")
+		var hmac = shaObj.getHMAC(signingkey, "ASCII", "HEX");
+
+
+		console.log('shaObj')
+		console.log(shaObj)
+		console.log(hexToBase64(hmac))
+		return hexToBase64(hmac);
+	}
+			var consumer_secret = '4HFnreKY1m0rV35ZVmQ50DE0JK5lyj9Oa615jw0UDZ8';
+			var oauth_consumer_key = 'gZXSdzZI4D56hCOoOj1A';
+			var oauth_nonce = randomString(12);
+			var oauth_token = '473437540-rwGXDyu9it1KHwkj5tGaxqjgO7nK5SUtsAmgYyTg';
+			var oauth_token_secret = '6mIrx0xrGO68dwl56GdwedOyvrZwsfHIzbChb3ROs';
+			var ts = Date.now();
+			var oauth_signature = getOauthSig(oauth_consumer_key,oauth_nonce,consumer_secret,oauth_token_secret,ts);
+			//build the header string
+			var header = "OAuth oauth_consumer_key=\""+encodeURIComponent(oauth_consumer_key)+"\", oauth_nonce=\""+encodeURIComponent(oauth_nonce)+"\", oauth_signature=\""+encodeURIComponent(oauth_signature)+"\", oauth_signature_method=\""+encodeURIComponent('HMAC-SHA1')+"\", oauth_timestamp=\""+encodeURIComponent(ts)+"\", oauth_token=\""+encodeURIComponent(oauth_token)+"\", oauth_version=\""+encodeURIComponent('1.0')+"\"";
+			console.log('header')
+			console.log(header)
+
+
+            $(document).ready(function(){
+                $.ajax({
+                    url: 'https://twitter.com/statuses/user_timeline/SumeetSharma126.json',
+                    dataType: 'jsonp',
+                    beforeSend: function (xhr) {
+                    	console.log("before sending....")
+                    	xhr.setRequestHeader("Authorization",header);
+                    },
+
+                    success: function(data){
+                        var text = '';
+                        var len = data.length;
+                        console.log("success!"+len)
+                        console.log(data)
+                        for(var i=0;i<len;i++){
+                            var twitterEntry = data[i];
+                            text += '<p><img src = "' + twitterEntry.user.profile_image_url_https +'"/>' + twitterEntry['text'] + '</p>'
+                        }
+                        console.log(text)
+                        $('#twitterfeed').html(text);
+                    },
+                    error: function (er,ops,msg) {
+                    	console.log(msg)
+                    }
+                });
+            })
+*/
 </script> 
+
+
+<div id="twitterfeed"></div>
+<a HREF="/twitterAuth" onClick="return popup(this, 'notes')">my popup</a>
+
+
 
 </body>
 </html>

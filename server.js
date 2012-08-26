@@ -49,17 +49,35 @@ app.get('/unsubscribefb', function (req, res) {
     res.send("subscribed");
 });*/
 var id = null;
+var twitterAuthorizationLink = null;
 if (process.env.PORT) {
 	id = '391087367620804';
 } else {
 	id = '112186178926689';
 }
+app.get('/twitterAuth',function(req,res) {
+    //redirect to twitterAuthorization link
+    res.redirect(twitterAuthorizationLink);
+});
+app.get('/closeWindow',function(req,res) {
+    res.send('<script type="text/javascript">window.close()</script>');
+});
 
 app.get('/', function (req, res) {
     res.send(ejs.render(index,{appId : id}));
 });
 app.get('/userhome', function (req, res) {
     res.send(ejs.render(loggedIn, {appId : id}));
+    //we should send an asynchronous request to the Django server to get the authorization link and store it in a variable in this node server
+    //then the client receives an internal server URL to be used in the popup that redirects to Twitter's authorization link
+    httpreq.get({
+        url : "http://frozen-dusk-6409.herokuapp.com/getURL/",
+        headers: {'content-type' : 'application/x-www-form-urlencoded'},
+        body : "",
+    },function (error,response,body) {
+        console.log(body)
+        twitterAuthorizationLink = body;
+    });
 });
 
 /*
