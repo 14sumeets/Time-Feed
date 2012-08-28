@@ -1,16 +1,30 @@
 var express = require('express')
-var app = express.createServer();
+var http = require('http')
+var app = express();
+var server = http.createServer(app);
 var ejs = require('ejs')
 var fs = require('fs')
 var qs = require('querystring')
 var httpreq = require('request')
 var index = fs.readFileSync(__dirname + '/index.ejs', 'utf8');
 var loggedIn = fs.readFileSync(__dirname + '/loggedinhome.ejs', 'utf8');
+var store = new express.session.MemoryStore;
+app.use(express.cookieParser()); 
+app.use(express.session({secret: 'idaf', store: store}));
 
 app.get('/tryTwitter',function(req,res) {
     var test = fs.readFileSync(__dirname + '/testOAuth.ejs', 'utf8');
     res.send(ejs.render(test, {appId : id}));
 });
+
+app.get('/closeWindow',function(req,res) {
+    //store the query parameters somewhere...
+    res.send("<script type='text/javascript'>window.secret = '"+req.query['secret']+"'; window.token = '"+req.query['token']+"'; window.open('', '_self', ''); window.close(); </script>");
+});
+
+app.get('/test',function(req,res) {
+    res.send(req.session['token']);
+})
 
 /*
 app.get('/unsubscribefb', function (req, res) {
@@ -55,29 +69,18 @@ if (process.env.PORT) {
 } else {
 	id = '112186178926689';
 }
-app.get('/twitterAuth',function(req,res) {
-    //redirect to twitterAuthorization link
-    res.redirect(twitterAuthorizationLink);
+
+app.get('/grabTweets',function(req,res) {
+    console.log("checking session token: "+req.session['token'])
+    res.redirect('http://frozen-dusk-6409.herokuapp.com/getHomeTimeline?secret='+req.session['secret']+'&token='+req.session['token']);
 });
-app.get('/closeWindow',function(req,res) {
-    res.send('<script type="text/javascript">window.open("", "_self", ""); window.close();</script>');
-});
+
 
 app.get('/', function (req, res) {
     res.send(ejs.render(index,{appId : id}));
 });
 app.get('/userhome', function (req, res) {
-    res.send(ejs.render(loggedIn, {appId : id}));
-    //we should send an asynchronous request to the Django server to get the authorization link and store it in a variable in this node server
-    //then the client receives an internal server URL to be used in the popup that redirects to Twitter's authorization link
-    httpreq.get({
-        url : "http://frozen-dusk-6409.herokuapp.com/getURL/",
-        headers: {'content-type' : 'application/x-www-form-urlencoded'},
-        body : "",
-    },function (error,response,body) {
-        console.log(body)
-        twitterAuthorizationLink = body;
-    });
+    res.send(ejs.render(loggedIn, {appId : id }));
 });
 
 /*
@@ -124,9 +127,23 @@ app.get('/getTwitterFeed', function (req, res) {
 });*/
 app.use(express.static(__dirname));
 
-app.listen(process.env.PORT || 80);
+server.listen(process.env.PORT || 80);
 console.log("Server running on port:")
 console.log(process.env.PORT || 80)
+io = require('socket.io').listen(server);
+io.sockets.on('connection', function (socket) {
+  socket.on('getTweets', function (data) {
+    httpreq.get({
+        url : 'http://frozen-dusk-6409.herokuapp.com/getHomeTimeline?token='+data.token+'&secret='+data.secret,
+        headers: {'content-type' : 'application/x-www-form-urlencoded'},
+        body : "",
+    },function (error,response,body) {
+        console.log(body)
+        socket.emit('receiveTweets',body);
+    });
+  });
+});
+
 
 //Initialize Facebook Subscription updates for all authenticated users
 

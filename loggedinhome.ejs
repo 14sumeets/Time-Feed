@@ -68,11 +68,9 @@
 				} ());
     </script>
 
-	<script type="text/javascript" src="http://platform.twitter.com/anywhere.js?id=gZXSdzZI4D56hCOoOj1A&v=1">
-	   //Load Twitter's @Anywhere API (pretty fast)
-    </script>
+	<script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="twitter.js">
-        //Use Twitter's @Anywere API
+        //Use Twitter's API
     </script>
 
 
@@ -87,7 +85,7 @@
                                 <div id="profile_pic"> </div> <div id="profile_name" class="fbauthorname"> </div>
                             </div>
 
-		<div id = "Add_Twitter" class="dashboard_element"> <span id="twitter_auth"></span><span id="twitter_signout"><button id="twittersignoutbutton" type="button">Sign out of Twitter</button></span>
+		<div id = "Add_Twitter" class="dashboard_element"> <span id="twitter_auth"></span><span id="twitter_sign"><a HREF="http://frozen-dusk-6409.herokuapp.com/begin_auth" onClick="return popup(this, 'notes')">Authenticate with Twitter and get tweets!</a></span>
 		</div></div>
 			<div class="appwindow" id="app"></div> 
  		</div>
